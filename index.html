@@ -20,8 +20,6 @@ body{
     color:white;
 }
 
-/* TELAS */
-
 .screen{
     display:none;
     min-height:100vh;
@@ -273,6 +271,10 @@ button:active{
     border-bottom:1px solid #444;
 }
 
+.score:last-child{
+    border-bottom:none;
+}
+
 /* MÃO */
 
 .hand-area{
@@ -323,6 +325,11 @@ button:active{
 
 .white.selected{
     transform:translateY(-30px);
+}
+
+.white.disabled{
+    opacity:.5;
+    pointer-events:none;
 }
 
 /* BOTÃO JOGAR */
@@ -385,19 +392,14 @@ button:active{
 
 <body>
 
-
 <!-- HOME -->
 
 <section id="home" class="screen active">
 
 <div class="logo">
-
 <h1>🃏 CARTAS<br>CONTRA TALYS</h1>
-
 <p>Onde a dignidade é opcional.</p>
-
 </div>
-
 
 <div class="box">
 
@@ -436,7 +438,6 @@ button:active{
 
 </div>
 
-
 <div class="lobby-content">
 
 <h1>Esperando jogadores...</h1>
@@ -464,32 +465,23 @@ Mande o código para seus amigos.
 
 <div class="game-top">
 
-<div id="round">
-RODADA 1
-</div>
+<div id="round">RODADA 1</div>
 
-<div id="judge">
-👑 Juiz: ...
-</div>
+<div id="judge">👑 Juiz: ...</div>
 
 </div>
-
 
 <div id="players"></div>
-
 
 <div id="blackCard">
 Aguardando...
 </div>
 
-
 <div id="status">
 Aguardando jogadores...
 </div>
 
-
 <div id="submissions"></div>
-
 
 <div id="scoreboard">
 
@@ -499,11 +491,9 @@ Aguardando jogadores...
 
 </div>
 
-
 <button id="play">
 JOGAR CARTA
 </button>
-
 
 <div class="hand-area">
 
@@ -557,35 +547,25 @@ import {
 
 const firebaseConfig = {
 
-    apiKey:
-    "AIzaSyCw5UmpciDeaBoV8_PsgDGUvohu0_kafMM",
+    apiKey:"AIzaSyCw5UmpciDeaBoV8_PsgDGUvohu0_kafMM",
 
-    authDomain:
-    "cartas-contra-humanidade-d91e3.firebaseapp.com",
+    authDomain:"cartas-contra-humanidade-d91e3.firebaseapp.com",
 
-    databaseURL:
-    "https://cartas-contra-humanidade-d91e3-default-rtdb.firebaseio.com/",
+    databaseURL:"https://cartas-contra-humanidade-d91e3-default-rtdb.firebaseio.com/",
 
-    projectId:
-    "cartas-contra-humanidade-d91e3",
+    projectId:"cartas-contra-humanidade-d91e3",
 
-    storageBucket:
-    "cartas-contra-humanidade-d91e3.firebasestorage.app",
+    storageBucket:"cartas-contra-humanidade-d91e3.firebasestorage.app",
 
-    messagingSenderId:
-    "546342432146",
+    messagingSenderId:"546342432146",
 
-    appId:
-    "1:546342432146:web:17e6bb977a3d7e1a57a54b"
+    appId:"1:546342432146:web:17e6bb977a3d7e1a57a54b"
 
 };
 
 
-const app =
-initializeApp(firebaseConfig);
-
-const db =
-getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 
 /* CARTAS */
@@ -701,10 +681,9 @@ let room = null;
 let myName = null;
 let selected = null;
 let handCards = [];
-let unsubscribe = null;
 
 
-/* ELEMENTOS */
+/* TELAS */
 
 const home =
 document.getElementById("home");
@@ -720,8 +699,8 @@ function show(screen){
 
     document
     .querySelectorAll(".screen")
-    .forEach(s =>
-        s.classList.remove("active")
+    .forEach(
+        s => s.classList.remove("active")
     );
 
     screen.classList.add("active");
@@ -733,12 +712,10 @@ function show(screen){
 
 function shuffle(array){
 
-    const copy =
-    [...array];
+    const copy = [...array];
 
     for(
-        let i =
-        copy.length - 1;
+        let i = copy.length - 1;
         i > 0;
         i--
     ){
@@ -765,21 +742,16 @@ function shuffle(array){
 }
 
 
-/* CÓDIGO */
+/* CÓDIGO DA SALA */
 
 function newCode(){
 
     const chars =
     "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    let code =
-    "";
+    let code = "";
 
-    for(
-        let i = 0;
-        i < 6;
-        i++
-    ){
+    for(let i = 0; i < 6; i++){
 
         code +=
         chars[
@@ -796,7 +768,7 @@ function newCode(){
 }
 
 
-/* CRIAR */
+/* CRIAR SALA */
 
 document
 .getElementById("create")
@@ -829,11 +801,8 @@ async () => {
 
     try{
 
-        myName =
-        name;
-
-        room =
-        code;
+        myName = name;
+        room = code;
 
 
         await set(
@@ -843,23 +812,17 @@ async () => {
             ),
             {
 
-                host:
-                playerId,
+                host:playerId,
 
-                status:
-                "lobby",
+                status:"lobby",
 
-                round:
-                0,
+                round:0,
 
-                judge:
-                null,
+                judge:null,
 
-                blackCard:
-                "",
+                blackCard:"",
 
-                winner:
-                null,
+                winner:null,
 
                 players:{
                     [playerId]:{
@@ -891,7 +854,7 @@ async () => {
 );
 
 
-/* ENTRAR */
+/* ENTRAR NA SALA */
 
 document
 .getElementById("join")
@@ -904,6 +867,7 @@ async () => {
     .getElementById("name")
     .value
     .trim();
+
 
     const code =
     document
@@ -952,10 +916,7 @@ async () => {
         snap.val();
 
 
-        if(
-            data.status !==
-            "lobby"
-        ){
+        if(data.status !== "lobby"){
 
             document
             .getElementById("msg")
@@ -967,11 +928,8 @@ async () => {
         }
 
 
-        myName =
-        name;
-
-        room =
-        code;
+        myName = name;
+        room = code;
 
 
         await update(
@@ -983,8 +941,10 @@ async () => {
                 playerId
             ),
             {
+
                 name:name,
                 score:0
+
             }
         );
 
@@ -1033,26 +993,24 @@ function enterLobby(){
             snapshot.val();
 
 
-            if(
-                data.status ===
-                "lobby"
-            ){
+            if(data.status === "lobby"){
 
-                renderLobby(
-                    data
-                );
+                renderLobby(data);
 
             }
 
 
-            if(
-                data.status ===
-                "playing"
-            ){
+            if(data.status === "playing"){
 
-                renderGame(
-                    data
-                );
+                renderGame(data);
+
+            }
+
+
+            if(data.status === "winner"){
+
+                renderGame(data);
+                renderWinner(data);
 
             }
 
@@ -1073,8 +1031,8 @@ function renderLobby(data){
     document
     .getElementById("playerList");
 
-    list.innerHTML =
-    "";
+
+    list.innerHTML = "";
 
 
     Object.entries(
@@ -1086,6 +1044,7 @@ function renderLobby(data){
             const div =
             document
             .createElement("div");
+
 
             div.className =
             "player";
@@ -1115,27 +1074,17 @@ function renderLobby(data){
     .getElementById("start");
 
 
-    if(
-        data.host ===
-        playerId
-    ){
-
-        start.style.display =
-        "block";
-
-    }
-
-    else{
-
-        start.style.display =
-        "none";
-
-    }
+    start.style.display =
+    data.host === playerId
+    ?
+    "block"
+    :
+    "none";
 
 }
 
 
-/* INICIAR */
+/* INICIAR JOGO */
 
 document
 .getElementById("start")
@@ -1174,10 +1123,6 @@ async () => {
     }
 
 
-    const judge =
-    players[0];
-
-
     await update(
         ref(
             db,
@@ -1185,14 +1130,11 @@ async () => {
         ),
         {
 
-            status:
-            "playing",
+            status:"playing",
 
-            round:
-            1,
+            round:1,
 
-            judge:
-            judge,
+            judge:players[0],
 
             blackCard:
             blackCards[
@@ -1213,7 +1155,7 @@ async () => {
 );
 
 
-/* JOGO */
+/* RENDERIZAR JOGO */
 
 function renderGame(data){
 
@@ -1252,13 +1194,11 @@ function renderPlayers(data){
     document
     .getElementById("players");
 
-    box.innerHTML =
-    "";
+
+    box.innerHTML = "";
 
 
-    Object.entries(
-        data.players
-    )
+    Object.entries(data.players)
     .forEach(
         ([id,player]) => {
 
@@ -1266,13 +1206,12 @@ function renderPlayers(data){
             document
             .createElement("div");
 
+
             div.className =
             "player-tag";
 
-            if(
-                id ===
-                data.judge
-            ){
+
+            if(id === data.judge){
 
                 div.classList
                 .add("judge");
@@ -1302,9 +1241,10 @@ function renderPlayers(data){
     .textContent =
     "👑 Juiz: " +
     (
-        data.players[
-            data.judge
-        ]?.name ||
+        data.players[data.judge]
+        ?
+        data.players[data.judge].name
+        :
         "..."
     );
 
@@ -1319,19 +1259,18 @@ function renderScores(data){
     document
     .getElementById("scores");
 
-    scores.innerHTML =
-    "";
+
+    scores.innerHTML = "";
 
 
-    Object.values(
-        data.players
-    )
+    Object.values(data.players)
     .forEach(
         player => {
 
             const div =
             document
             .createElement("div");
+
 
             div.className =
             "score";
@@ -1340,13 +1279,13 @@ function renderScores(data){
             div.innerHTML =
             "<span>" +
             player.name +
-            "</span><strong>" +
+            "</span>" +
+            "<strong>" +
             (player.score || 0) +
             "</strong>";
 
 
-            scores
-            .appendChild(div);
+            scores.appendChild(div);
 
         }
     );
@@ -1354,7 +1293,7 @@ function renderScores(data){
 }
 
 
-/* MÃO */
+/* MÃO DO JOGADOR */
 
 function renderHand(data){
 
@@ -1368,16 +1307,16 @@ function renderHand(data){
     .getElementById("play");
 
 
-    if(
-        playerId ===
-        data.judge
-    ){
+    const alreadyPlayed =
+    data.submissions &&
+    data.submissions[playerId];
 
-        hand.innerHTML =
-        "";
 
-        play.style.display =
-        "none";
+    if(playerId === data.judge){
+
+        hand.innerHTML = "";
+
+        play.style.display = "none";
 
 
         document
@@ -1390,22 +1329,16 @@ function renderHand(data){
     }
 
 
-    if(
-        handCards.length ===
-        0
-    ){
+    if(handCards.length === 0){
 
         handCards =
-        shuffle(
-            whiteCards
-        )
+        shuffle(whiteCards)
         .slice(0,7);
 
     }
 
 
-    hand.innerHTML =
-    "";
+    hand.innerHTML = "";
 
 
     handCards
@@ -1416,17 +1349,23 @@ function renderHand(data){
             document
             .createElement("div");
 
+
             div.className =
             "white";
 
 
-            if(
-                selected ===
-                index
-            ){
+            if(selected === index){
 
                 div.classList
                 .add("selected");
+
+            }
+
+
+            if(alreadyPlayed){
+
+                div.classList
+                .add("disabled");
 
             }
 
@@ -1438,26 +1377,414 @@ function renderHand(data){
             div.onclick =
             () => {
 
+                if(alreadyPlayed)
+                return;
+
+
                 selected =
                 index;
+
 
                 renderHand(data);
 
             };
 
 
-            hand
-            .appendChild(div);
+            hand.appendChild(div);
 
         }
     );
 
 
-    const alreadyPlayed =
-    data.submissions &&
+    if(alreadyPlayed){
+
+        play.style.display =
+        "none";
+
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Carta enviada. Aguarde o juiz.";
+
+    }
+
+    else if(selected !== null){
+
+        play.style.display =
+        "block";
+
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Carta selecionada.";
+
+        }
+
+    else{
+
+        play.style.display =
+        "none";
+
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Escolha uma carta.";
+
+    }
+
+}
+
+
+/* JOGAR CARTA */
+
+document
+.getElementById("play")
+.addEventListener(
+"click",
+async () => {
+
+    if(selected === null)
+    return;
+
+
+    const card =
+    handCards[selected];
+
+
+    await set(
+        ref(
+            db,
+            "rooms/" +
+            room +
+            "/submissions/" +
+            playerId
+        ),
+        {
+
+            card:card
+
+        }
+    );
+
+
+    selected = null;
+
+}
+);
+
+
+/* CARTAS ENVIADAS */
+
+function renderSubmissions(data){
+
+    const box =
+    document
+    .getElementById("submissions");
+
+
+    box.innerHTML = "";
+
+
+    const submissions =
+    data.submissions || {};
+
+
+    const ids =
+    Object.keys(submissions);
+
+
+    const nonJudges =
+    Object.keys(data.players)
+    .filter(
+        id =>
+        id !== data.judge
+    );
+
+
+    if(playerId !== data.judge){
+
+        return;
+
+    }
+
+
+    if(ids.length === 0){
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Aguardando cartas...";
+
+        return;
+
+    }
+
+
+    if(ids.length < nonJudges.length){
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Aguardando " +
+        (nonJudges.length - ids.length) +
+        " jogador(es)...";
+
+    }
+
+    else{
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Escolha a carta vencedora.";
+
+    }
+
+
+    ids
+    .forEach(
+        id => {
+
+            const submission =
+            submissions[id];
+
+
+            const div =
+            document
+            .createElement("div");
+
+
+            div.className =
+            "submission";
+
+
+            div.textContent =
+            submission.card;
+
+
+            div.onclick =
+            async () => {
+
+                if(
+                    playerId !==
+                    data.judge
+                )
+                return;
+
+
+                if(
+                    ids.length <
+                    nonJudges.length
+                )
+                return;
+
+
+                await chooseWinner(
+                    data,
+                    id
+                );
+
+            };
+
+
+            box.appendChild(div);
+
+        }
+    );
+
+}
+
+
+/* ESCOLHER VENCEDOR */
+
+async function chooseWinner(
+data,
+winnerId
+){
+
+    const submission =
     data.submissions[
-        playerId
+        winnerId
     ];
 
 
-    if(alread
+    const winner =
+    data.players[
+        winnerId
+    ];
+
+
+    const currentScore =
+    winner.score || 0;
+
+
+    await update(
+        ref(
+            db,
+            "rooms/" + room
+        ),
+        {
+
+            status:"winner",
+
+            winner:{
+                id:winnerId,
+                name:winner.name,
+                card:submission.card
+            },
+
+            ["players/" +
+            winnerId +
+            "/score"]:
+            currentScore + 1
+
+        }
+    );
+
+}
+
+
+/* MOSTRAR VENCEDOR */
+
+function renderWinner(data){
+
+    const winner =
+    data.winner;
+
+
+    if(!winner)
+    return;
+
+
+    document
+    .getElementById("winnerName")
+    .textContent =
+    winner.name;
+
+
+    document
+    .getElementById("winnerCard")
+    .textContent =
+    winner.card;
+
+
+    document
+    .getElementById("overlay")
+    .classList
+    .add("show");
+
+
+    const next =
+    document
+    .getElementById("next");
+
+
+    next.style.display =
+    playerId === data.host
+    ?
+    "block"
+    :
+    "none";
+
+}
+
+
+/* PRÓXIMA RODADA */
+
+document
+.getElementById("next")
+.addEventListener(
+"click",
+async () => {
+
+    const snap =
+    await get(
+        ref(
+            db,
+            "rooms/" + room
+        )
+    );
+
+
+    if(!snap.exists())
+    return;
+
+
+    const data =
+    snap.val();
+
+
+    if(playerId !== data.host)
+    return;
+
+
+    const players =
+    Object.keys(data.players);
+
+
+    const currentJudgeIndex =
+    players.indexOf(data.judge);
+
+
+    const nextJudge =
+    players[
+        (
+            currentJudgeIndex + 1
+        )
+        %
+        players.length
+    ];
+
+
+    handCards = [];
+    selected = null;
+
+
+    document
+    .getElementById("overlay")
+    .classList
+    .remove("show");
+
+
+    await update(
+        ref(
+            db,
+            "rooms/" + room
+        ),
+        {
+
+            status:"playing",
+
+            round:
+            (data.round || 0) + 1,
+
+            judge:
+            nextJudge,
+
+            blackCard:
+            blackCards[
+                Math.floor(
+                    Math.random() *
+                    blackCards.length
+                )
+            ],
+
+            submissions:{},
+
+            winner:null
+
+        }
+    );
+
+}
+);
+
+</script>
+
+</body>
+</html>
+
+ 
