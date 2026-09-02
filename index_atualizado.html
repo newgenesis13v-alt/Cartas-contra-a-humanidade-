@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Cartas Contra Talys</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:#181818;
+    color:white;
+}
+
+.screen{
+    display:none;
+    min-height:100vh;
+}
+
+.screen.active{
+    display:flex;
+}
+
+/* HOME */
+
+#home{
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    text-align:center;
+    background:radial-gradient(circle at top,#444,#151515 70%);
+}
+
+.logo{
+    margin-bottom:25px;
+}
+
+.logo h1{
+    margin:0;
+    font-size:clamp(2.5rem,10vw,4rem);
+    line-height:.9;
+}
+
+.logo p{
+    color:#aaa;
+}
+
+.box{
+    width:100%;
+    max-width:420px;
+    padding:22px;
+    background:#292929;
+    border-radius:24px;
+}
+
+input,
+button{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:16px;
+    margin:7px 0;
+    font-size:16px;
+}
+
+button{
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+#create{
+    background:white;
+    color:black;
+}
+
+#join{
+    background:#484848;
+    color:white;
+}
+
+#msg{
+    min-height:25px;
+    color:#ffaaaa;
+}
+
+/* LOBBY */
+
+#lobby{
+    flex-direction:column;
+    padding:20px;
+    background:#181818;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.room-code{
+    background:white;
+    color:black;
+    padding:10px 16px;
+    border-radius:12px;
+    letter-spacing:3px;
+    font-weight:bold;
+}
+
+.lobby-content{
+    width:100%;
+    max-width:550px;
+    margin:auto;
+    text-align:center;
+}
+
+.players-box{
+    background:#292929;
+    border-radius:20px;
+    overflow:hidden;
+    margin:25px 0;
+}
+
+.player{
+    padding:16px;
+    border-bottom:1px solid #444;
+    display:flex;
+    justify-content:space-between;
+}
+
+.player:last-child{
+    border-bottom:none;
+}
+
+.host-tag{
+    background:white;
+    color:black;
+    border-radius:8px;
+    padding:4px 8px;
+    font-size:11px;
+}
+
+#start{
+    display:none;
+    background:white;
+    color:black;
+}
+
+/* JOGO */
+
+#game{
+    flex-direction:column;
+    min-height:100vh;
+    padding:15px;
+    padding-bottom:220px;
+    background:radial-gradient(circle at center,#3a3a3a,#111 80%);
+}
+
+.game-top{
+    text-align:center;
+}
+
+#round{
+    color:#aaa;
+    margin-bottom:5px;
+}
+
+#judge{
+    color:#ffd95a;
+    font-weight:bold;
+}
+
+#players{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:15px 0;
+}
+
+.player-tag{
+    background:#292929;
+    padding:8px 12px;
+    border-radius:12px;
+    font-size:13px;
+}
+
+.player-tag.judge{
+    border:2px solid #ffd95a;
+}
+
+/* CARTA PRETA */
+
+#blackCard{
+    width:min(85vw,390px);
+    min-height:250px;
+    background:black;
+    border-radius:22px;
+    padding:25px;
+    margin:15px auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    line-height:1.35;
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+
+#status{
+    text-align:center;
+    color:#aaa;
+    min-height:30px;
+}
+
+/* CARTAS ENVIADAS */
+
+#submissions{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:20px auto;
+    max-width:700px;
+}
+
+.submission{
+    width:145px;
+    min-height:180px;
+    padding:15px;
+    background:white;
+    color:black;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* PLACAR */
+
+#scoreboard{
+    width:100%;
+    max-width:550px;
+    margin:auto;
+    background:#292929;
+    border-radius:18px;
+    padding:10px;
+}
+
+.score{
+    display:flex;
+    justify-content:space-between;
+    padding:10px;
+    border-bottom:1px solid #444;
+}
+
+.score:last-child{
+    border-bottom:none;
+}
+
+/* MÃO */
+
+.hand-area{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:linear-gradient(transparent,#000 30%);
+    padding:10px;
+}
+
+.hand-title{
+    text-align:center;
+    color:#aaa;
+    font-size:12px;
+}
+
+#hand{
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    overflow-x:auto;
+    padding:15px 5px;
+}
+
+.white{
+    flex:0 0 115px;
+    height:160px;
+    background:white;
+    color:black;
+    border-radius:13px;
+    padding:12px;
+    margin-left:-35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.15s;
+    box-shadow:0 5px 15px rgba(0,0,0,.4);
+}
+
+.white:first-child{
+    margin-left:0;
+}
+
+.white.selected{
+    transform:translateY(-30px);
+}
+
+.white.disabled{
+    opacity:.5;
+    pointer-events:none;
+}
+
+/* BOTÃO JOGAR */
+
+#play{
+    display:none;
+    position:fixed;
+    bottom:190px;
+    left:50%;
+    transform:translateX(-50%);
+    width:auto;
+    padding:14px 30px;
+    background:white;
+    color:black;
+    z-index:10;
+}
+
+
+/* JULGAMENTO CINEMÁTICO */
+.judgement-area{
+    width:min(96vw,950px);
+    min-height:330px;
+    margin:8px auto 18px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+#blackCard{
+    position:relative;
+    z-index:3;
+}
+#submissions{
+    position:absolute;
+    inset:0;
+    max-width:none;
+    margin:0;
+    pointer-events:none;
+}
+.submission{
+    position:absolute;
+    width:132px;
+    min-height:175px;
+    padding:0;
+    background:transparent;
+    perspective:1000px;
+    pointer-events:auto;
+    box-shadow:none;
+    overflow:visible;
+    animation:dealIn .45s both;
+}
+.submission:nth-child(1){left:2%;top:50%;transform:translateY(-50%) rotate(-5deg)}
+.submission:nth-child(2){right:2%;top:50%;transform:translateY(-50%) rotate(5deg)}
+.submission:nth-child(3){left:10%;top:3%;transform:rotate(-9deg)}
+.submission:nth-child(4){right:10%;top:3%;transform:rotate(9deg)}
+.submission:nth-child(5){left:10%;bottom:3%;transform:rotate(9deg)}
+.submission:nth-child(6){right:10%;bottom:3%;transform:rotate(-9deg)}
+.submission:nth-child(n+7){left:50%;top:50%;transform:translate(-50%,-50%)}
+.card-inner{
+    position:absolute; inset:0;
+    transform-style:preserve-3d;
+    transition:transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.submission.revealed .card-inner{transform:rotateY(180deg)}
+.card-face{
+    position:absolute; inset:0;
+    border-radius:16px;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:15px;
+    font-size:13px;
+    font-weight:bold;
+    box-shadow:0 10px 25px rgba(0,0,0,.45);
+}
+.card-back{
+    background:repeating-linear-gradient(45deg,#111,#111 8px,#252525 8px,#252525 16px);
+    border:3px solid white;
+    color:white;
+    font-size:30px;
+}
+.card-front{
+    background:white;
+    color:black;
+    transform:rotateY(180deg);
+}
+.submission:not(.clickable){cursor:default}
+.submission.clickable{cursor:pointer}
+.submission.waiting{opacity:.82}
+.submission.winner{
+    z-index:20;
+    animation:winnerPop 1s both;
+}
+.submission.loser{
+    opacity:.25;
+    filter:blur(1px) grayscale(1);
+    transform:scale(.88);
+    transition:.5s;
+}
+@keyframes dealIn{
+    from{opacity:0; filter:blur(5px)}
+    to{opacity:1; filter:none}
+}
+@keyframes winnerPop{
+    0%{transform:scale(1) rotate(0)}
+    45%{transform:scale(1.28) rotate(-2deg)}
+    70%{transform:scale(1.15) rotate(2deg)}
+    100%{transform:scale(1.2) rotate(0)}
+}
+#round,.player-tag,#blackCard,#scoreboard{
+    animation:fadeUp .35s ease both;
+}
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:620px){
+    .judgement-area{min-height:470px}
+    #blackCard{width:min(68vw,310px);min-height:220px;font-size:17px}
+    .submission{width:105px;min-height:145px}
+    .submission:nth-child(1){left:1%;top:50%}
+    .submission:nth-child(2){right:1%;top:50%}
+    .submission:nth-child(3){left:3%;top:5%}
+    .submission:nth-child(4){right:3%;top:5%}
+    .submission:nth-child(5){left:3%;bottom:5%}
+    .submission:nth-child(6){right:3%;bottom:5%}
+}
+
+/* VENCEDOR */
+
+#overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.9);
+    z-index:50;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+}
+
+#overlay.show{
+    display:flex;
+}
+
+.winner-box{
+    width:100%;
+    max-width:400px;
+    background:#292929;
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+}
+
+.winner-card{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    margin:20px 0;
+    font-weight:bold;
+}
+
+#next{
+    background:white;
+    color:black;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+
+<section id="home" class="screen active">
+
+<div class="logo">
+<h1>🃏 CARTAS<br>CONTRA TALYS</h1>
+<p>Onde a dignidade é opcional.</p>
+</div>
+
+<div class="box">
+
+<input id="name" placeholder="Seu nome" maxlength="20">
+
+<button id="create">
+🏠 CRIAR SALA
+</button>
+
+<p>──── OU ────</p>
+
+<input id="code" placeholder="Código da sala" maxlength="6">
+
+<button id="join">
+🔑 ENTRAR
+</button>
+
+<p id="msg"></p>
+
+</div>
+
+</section>
+
+
+<!-- LOBBY -->
+
+<section id="lobby" class="screen">
+
+<div class="top">
+
+<strong>🃏 SALA</strong>
+
+<div id="roomCode" class="room-code">
+------
+</div>
+
+</div>
+
+<div class="lobby-content">
+
+<h1>Esperando jogadores...</h1>
+
+<p style="color:#aaa">
+Mande o código para seus amigos.
+</p>
+
+<div id="playerList" class="players-box"></div>
+
+<button id="start">
+▶ INICIAR PARTIDA
+</button>
+
+<p id="lobbyMsg"></p>
+
+</div>
+
+</section>
+
+
+<!-- JOGO -->
+
+<section id="game" class="screen">
+
+<div class="game-top">
+
+<div id="round">RODADA 1</div>
+
+<div id="judge">👑 Juiz: ...</div>
+
+</div>
+
+<div id="players"></div>
+
+<div class="judgement-area">
+<div id="blackCard">
+Aguardando...
+</div>
+<div id="submissions"></div>
+</div>
+
+<div id="status">
+Aguardando jogadores...
+</div>
+
+<div id="scoreboard">
+
+<strong>🏆 PLACAR</strong>
+
+<div id="scores"></div>
+
+</div>
+
+<button id="play">
+JOGAR CARTA
+</button>
+
+<div class="hand-area">
+
+<div class="hand-title">
+SUAS CARTAS
+</div>
+
+<div id="hand"></div>
+
+</div>
+
+</section>
+
+
+<!-- VENCEDOR -->
+
+<div id="overlay">
+
+<div class="winner-box">
+
+<h2>🏆 VENCEDOR DA RODADA</h2>
+
+<h3 id="winnerName"></h3>
+
+<div id="winnerCard" class="winner-card"></div>
+
+<button id="next">
+PRÓXIMA RODADA ▶
+</button>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    set,
+    get,
+    update,
+    onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+
+    apiKey:"AIzaSyCw5UmpciDeaBoV8_PsgDGUvohu0_kafMM",
+
+    authDomain:"cartas-contra-humanidade-d91e3.firebaseapp.com",
+
+    databaseURL:"https://cartas-contra-humanidade-d91e3-default-rtdb.firebaseio.com/",
+
+    projectId:"cartas-contra-humanidade-d91e3",
+
+    storageBucket:"cartas-contra-humanidade-d91e3.firebasestorage.app",
+
+    messagingSenderId:"546342432146",
+
+    appId:"1:546342432146:web:17e6bb977a3d7e1a57a54b"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+/* CARTAS */
+
+const blackCards = [
+"O jantar acabou quando alguém mencionou ______.",
+"Minha família nunca mais falou comigo depois de ______.",
+"A pior coisa encontrada no meu celular foi ______.",
+"A ceia de Natal foi destruída por ______.",
+"A internet decidiu me cancelar depois de ______.",
+"Meu advogado pediu para eu nunca mais mencionar ______.",
+"A reunião terminou quando alguém revelou ______.",
+"Tudo começou com a frase: 'Não conta para ninguém sobre ______.'",
+"Minha última célula cerebral foi embora depois de ______.",
+"Naquele momento eu percebi que tinha virado notícia por causa de ______.",
+"O grupo inteiro ficou em silêncio quando apareceu ______.",
+"O plano era perfeito até alguém trazer ______.",
+"Meu maior inimigo atualmente é ______.",
+"A frase que antecedeu uma catástrofe foi: 'Relaxa, eu trouxe ______.'",
+"Eu seria uma pessoa melhor se não existisse ______.",
+"Proibido entrar na minha casa com ______.",
+"A polícia tinha muitas perguntas sobre ______.",
+"Minha reputação sobreviveu, mas quase morreu por causa de ______."
+];
+
+
+const whiteCards = [
+"Meu tio dando uma opinião que ninguém pediu.",
+"Um segredo de família extremamente inconveniente.",
+"A pior mensagem enviada para a pessoa errada.",
+"A frase 'eu posso explicar'.",
+"Um áudio que nunca deveria existir.",
+"Uma captura de tela extremamente comprometedora.",
+"Meu histórico de pesquisa.",
+"A pior decisão da minha vida.",
+"Uma desculpa pior que o problema.",
+"O silêncio depois de uma pergunta proibida.",
+"Descobrir tarde demais que alguém estava gravando.",
+"Aquele parente que ninguém convidou.",
+"Uma opinião tão ruim que acabou com a amizade.",
+"Ser banido de algum lugar.",
+"Uma conversa que deveria ter ficado privada.",
+"O momento em que a brincadeira deixou de ser brincadeira.",
+"Uma discussão completamente sem sentido.",
+"Descobrir que todo mundo sabia.",
+"Ser o motivo de uma reunião urgente.",
+"Uma mensagem enviada às 3 da manhã.",
+"Um grupo de família completamente fora de controle.",
+"Fingir que nada aconteceu.",
+"Uma decisão tomada sem pensar.",
+"Explicar demais e piorar tudo.",
+"A frase 'confia em mim'.",
+"Uma testemunha inesperada.",
+"Uma ideia que parecia boa por cinco segundos.",
+"Descobrir o segredo errado.",
+"Alguém dizendo 'isso fica entre nós'.",
+"Uma ligação no pior momento possível.",
+"Um tutorial claramente feito por alguém que odeia iniciantes.",
+"Três neurônios discutindo quem é o responsável.",
+"Um pombo com informações demais.",
+"Um pen drive achado no chão.",
+"Uma apresentação de trabalho completamente amaldiçoada.",
+"Meu eu de 2017 aparecendo para me julgar.",
+"Um gato que sabe demais.",
+"A senha sendo literalmente 'senha123'.",
+"Um silêncio tão pesado que até o Wi-Fi caiu.",
+"Uma reunião marcada para resolver outra reunião.",
+"Uma teoria da conspiração criada às 4 da manhã.",
+"Alguém falando 'não ri' antes da pior notícia possível.",
+"Um grupo chamado 'não manda print'.",
+"A coragem de quem não leu nada e mesmo assim respondeu.",
+"Um personagem secundário assumindo o controle da história.",
+"A última bolacha do pacote causando guerra civil.",
+"Uma mensagem apagada que ninguém deveria ter apagado.",
+"O famoso 'depois eu resolvo' voltando para cobrar juros.",
+"Uma ideia proibida pela lógica.",
+"Cinco minutos de vergonha que duraram três anos.",
+"Um documento chamado FINAL_AGORA_VAI_V3_REAL_OFICIAL."
+];
+
+
+/* VARIÁVEIS */
+
+let playerId =
+localStorage.getItem("cartasPlayerId");
+
+if(!playerId){
+
+    playerId =
+    "p_" +
+    Math.random()
+    .toString(36)
+    .slice(2);
+
+    localStorage.setItem(
+        "cartasPlayerId",
+        playerId
+    );
+
+}
+
+
+let room = null;
+let myName = null;
+let selected = null;
+let handCards = [];
+
+
+/* TELAS */
+
+const home =
+document.getElementById("home");
+
+const lobby =
+document.getElementById("lobby");
+
+const game =
+document.getElementById("game");
+
+
+function show(screen){
+
+    document
+    .querySelectorAll(".screen")
+    .forEach(
+        s => s.classList.remove("active")
+    );
+
+    screen.classList.add("active");
+
+}
+
+
+/* EMBARALHAR */
+
+function shuffle(array){
+
+    const copy = [...array];
+
+    for(
+        let i = copy.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+        Math.floor(
+            Math.random() *
+            (i + 1)
+        );
+
+        [
+            copy[i],
+            copy[j]
+        ] =
+        [
+            copy[j],
+            copy[i]
+        ];
+
+    }
+
+    return copy;
+
+}
+
+
+/* CÓDIGO DA SALA */
+
+function newCode(){
+
+    const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let code = "";
+
+    for(let i = 0; i < 6; i++){
+
+        code +=
+        chars[
+            Math.floor(
+                Math.random() *
+                chars.length
+            )
+        ];
+
+    }
+
+    return code;
+
+}
+
+
+/* CRIAR SALA */
+
+document
+.getElementById("create")
+.addEventListener(
+"click",
+async () => {
+
+    const name =
+    document
+    .getElementById("name")
+    .value
+    .trim();
+
+
+    if(!name){
+
+        document
+        .getElementById("msg")
+        .textContent =
+        "Digite seu nome.";
+
+        return;
+
+    }
+
+
+    const code =
+    newCode();
+
+
+    try{
+
+        myName = name;
+        room = code;
+
+
+        await set(
+            ref(
+                db,
+                "rooms/" + room
+            ),
+            {
+
+                host:playerId,
+
+                status:"lobby",
+
+                round:0,
+
+                judge:null,
+
+                blackCard:"",
+
+                winner:null,
+
+                players:{
+                    [playerId]:{
+                        name:name,
+                        score:0
+                    }
+                },
+
+                submissions:{}
+
+            }
+        );
+
+
+        enterLobby();
+
+    }
+
+    catch(error){
+
+        document
+        .getElementById("msg")
+        .textContent =
+        error.message;
+
+    }
+
+}
+);
+
+
+/* ENTRAR NA SALA */
+
+document
+.getElementById("join")
+.addEventListener(
+"click",
+async () => {
+
+    const name =
+    document
+    .getElementById("name")
+    .value
+    .trim();
+
+
+    const code =
+    document
+    .getElementById("code")
+    .value
+    .trim()
+    .toUpperCase();
+
+
+    if(!name || !code){
+
+        document
+        .getElementById("msg")
+        .textContent =
+        "Digite nome e código.";
+
+        return;
+
+    }
+
+
+    try{
+
+        const snap =
+        await get(
+            ref(
+                db,
+                "rooms/" + code
+            )
+        );
+
+
+        if(!snap.exists()){
+
+            document
+            .getElementById("msg")
+            .textContent =
+            "Sala não encontrada.";
+
+            return;
+
+        }
+
+
+        const data =
+        snap.val();
+
+
+        if(data.status !== "lobby"){
+
+            document
+            .getElementById("msg")
+            .textContent =
+            "A partida já começou.";
+
+            return;
+
+        }
+
+
+        myName = name;
+        room = code;
+
+
+        await update(
+            ref(
+                db,
+                "rooms/" +
+                room +
+                "/players/" +
+                playerId
+            ),
+            {
+
+                name:name,
+                score:0
+
+            }
+        );
+
+
+        enterLobby();
+
+    }
+
+    catch(error){
+
+        document
+        .getElementById("msg")
+        .textContent =
+        error.message;
+
+    }
+
+}
+);
+
+
+/* LOBBY */
+
+function enterLobby(){
+
+    show(lobby);
+
+    document
+    .getElementById("roomCode")
+    .textContent =
+    room;
+
+
+    onValue(
+        ref(
+            db,
+            "rooms/" + room
+        ),
+        snapshot => {
+
+            if(!snapshot.exists())
+            return;
+
+
+            const data =
+            snapshot.val();
+
+
+            if(data.status === "lobby"){
+
+                renderLobby(data);
+
+            }
+
+
+            if(data.status === "playing"){
+
+                renderGame(data);
+
+            }
+
+
+            if(data.status === "winner"){
+
+                renderGame(data);
+                renderWinner(data);
+
+            }
+
+        }
+    );
+
+}
+
+
+/* LISTA DO LOBBY */
+
+function renderLobby(data){
+
+    show(lobby);
+
+
+    const list =
+    document
+    .getElementById("playerList");
+
+
+    list.innerHTML = "";
+
+
+    Object.entries(
+        data.players || {}
+    )
+    .forEach(
+        ([id,player]) => {
+
+            const div =
+            document
+            .createElement("div");
+
+
+            div.className =
+            "player";
+
+
+            div.innerHTML =
+            "<span>" +
+            player.name +
+            "</span>" +
+            (
+                id === data.host
+                ?
+                '<span class="host-tag">HOST</span>'
+                :
+                ""
+            );
+
+
+            list.appendChild(div);
+
+        }
+    );
+
+
+    const start =
+    document
+    .getElementById("start");
+
+
+    start.style.display =
+    data.host === playerId
+    ?
+    "block"
+    :
+    "none";
+
+}
+
+
+/* INICIAR JOGO */
+
+document
+.getElementById("start")
+.addEventListener(
+"click",
+async () => {
+
+    const snap =
+    await get(
+        ref(
+            db,
+            "rooms/" + room
+        )
+    );
+
+
+    const data =
+    snap.val();
+
+
+    const players =
+    Object.keys(
+        data.players || {}
+    );
+
+
+    if(players.length < 2){
+
+        document
+        .getElementById("lobbyMsg")
+        .textContent =
+        "Precisa de pelo menos 2 jogadores.";
+
+        return;
+
+    }
+
+
+    await update(
+        ref(
+            db,
+            "rooms/" + room
+        ),
+        {
+
+            status:"playing",
+
+            round:1,
+
+            judge:players[0],
+
+            blackCard:
+            blackCards[
+                Math.floor(
+                    Math.random() *
+                    blackCards.length
+                )
+            ],
+
+            submissions:{},
+
+            winner:null
+
+        }
+    );
+
+}
+);
+
+
+/* RENDERIZAR JOGO */
+
+function renderGame(data){
+
+    show(game);
+
+
+    document
+    .getElementById("round")
+    .textContent =
+    "RODADA " +
+    data.round;
+
+
+    document
+    .getElementById("blackCard")
+    .textContent =
+    data.blackCard;
+
+
+    renderPlayers(data);
+
+    renderScores(data);
+
+    renderHand(data);
+
+    renderSubmissions(data);
+
+}
+
+
+/* JOGADORES */
+
+function renderPlayers(data){
+
+    const box =
+    document
+    .getElementById("players");
+
+
+    box.innerHTML = "";
+
+
+    Object.entries(data.players)
+    .forEach(
+        ([id,player]) => {
+
+            const div =
+            document
+            .createElement("div");
+
+
+            div.className =
+            "player-tag";
+
+
+            if(id === data.judge){
+
+                div.classList
+                .add("judge");
+
+            }
+
+
+            div.textContent =
+            (
+                id === data.judge
+                ?
+                "👑 "
+                :
+                ""
+            ) +
+            player.name;
+
+
+            box.appendChild(div);
+
+        }
+    );
+
+
+    document
+    .getElementById("judge")
+    .textContent =
+    "👑 Juiz: " +
+    (
+        data.players[data.judge]
+        ?
+        data.players[data.judge].name
+        :
+        "..."
+    );
+
+}
+
+
+/* PLACAR */
+
+function renderScores(data){
+
+    const scores =
+    document
+    .getElementById("scores");
+
+
+    scores.innerHTML = "";
+
+
+    Object.values(data.players)
+    .forEach(
+        player => {
+
+            const div =
+            document
+            .createElement("div");
+
+
+            div.className =
+            "score";
+
+
+            div.innerHTML =
+            "<span>" +
+            player.name +
+            "</span>" +
+            "<strong>" +
+            (player.score || 0) +
+            "</strong>";
+
+
+            scores.appendChild(div);
+
+        }
+    );
+
+}
+
+
+/* MÃO DO JOGADOR */
+
+function renderHand(data){
+
+    const hand =
+    document
+    .getElementById("hand");
+
+
+    const play =
+    document
+    .getElementById("play");
+
+
+    const alreadyPlayed =
+    data.submissions &&
+    data.submissions[playerId];
+
+
+    if(playerId === data.judge){
+
+        hand.innerHTML = "";
+
+        play.style.display = "none";
+
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Você é o juiz. Aguarde as cartas.";
+
+        return;
+
+    }
+
+
+    if(handCards.length === 0){
+
+        handCards =
+        shuffle(whiteCards)
+        .slice(0,7);
+
+    }
+
+
+    hand.innerHTML = "";
+
+
+    handCards
+    .forEach(
+        (card,index) => {
+
+            const div =
+            document
+            .createElement("div");
+
+
+            div.className =
+            "white";
+
+
+            if(selected === index){
+
+                div.classList
+                .add("selected");
+
+            }
+
+
+            if(alreadyPlayed){
+
+                div.classList
+                .add("disabled");
+
+            }
+
+
+            div.textContent =
+            card;
+
+
+            div.onclick =
+            () => {
+
+                if(alreadyPlayed)
+                return;
+
+
+                selected =
+                index;
+
+
+                renderHand(data);
+
+            };
+
+
+            hand.appendChild(div);
+
+        }
+    );
+
+
+    if(alreadyPlayed){
+
+        play.style.display =
+        "none";
+
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Carta enviada. Aguarde o juiz.";
+
+    }
+
+    else if(selected !== null){
+
+        play.style.display =
+        "block";
+
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Carta selecionada.";
+
+        }
+
+    else{
+
+        play.style.display =
+        "none";
+
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Escolha uma carta.";
+
+    }
+
+}
+
+
+/* JOGAR CARTA */
+
+document
+.getElementById("play")
+.addEventListener(
+"click",
+async () => {
+
+    if(selected === null)
+    return;
+
+
+    const card =
+    handCards[selected];
+
+
+    await set(
+        ref(
+            db,
+            "rooms/" +
+            room +
+            "/submissions/" +
+            playerId
+        ),
+        {
+
+            card:card
+
+        }
+    );
+
+
+    selected = null;
+
+}
+);
+
+
+/* CARTAS ENVIADAS */
+
+function renderSubmissions(data){
+
+    const box =
+    document.getElementById("submissions");
+
+    box.innerHTML = "";
+
+    const submissions =
+    data.submissions || {};
+
+    const ids =
+    Object.keys(submissions);
+
+    const nonJudges =
+    Object.keys(data.players)
+    .filter(
+        id =>
+        id !== data.judge
+    );
+
+    if(ids.length === 0){
+
+        if(playerId === data.judge){
+            document
+            .getElementById("status")
+            .textContent =
+            "Aguardando cartas...";
+        }
+        else{
+            document
+            .getElementById("status")
+            .textContent =
+            "Aguardando jogadores...";
+        }
+        return;
+
+    }
+
+    if(playerId !== data.judge){
+
+        document
+        .getElementById("status")
+        .textContent =
+        ids.length === nonJudges.length
+        ? "O juiz está revelando as cartas..."
+        : "Aguardando jogadores...";
+
+    }
+
+    const allSent =
+    ids.length >= nonJudges.length;
+
+    const allRevealed =
+    allSent &&
+    ids.every(
+        id => submissions[id].revealed === true
+    );
+
+    if(!allSent){
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Aguardando " +
+        (nonJudges.length - ids.length) +
+        " jogador(es)...";
+
+    }
+
+    else if(!allRevealed){
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Clique nas cartas para revelá-las.";
+
+    }
+
+    else{
+
+        document
+        .getElementById("status")
+        .textContent =
+        "Todas reveladas. Escolha a vencedora.";
+
+    }
+
+    ids
+    .forEach(
+        (id => {
+
+            const submission =
+            submissions[id];
+
+            const div =
+            document
+            .createElement("div");
+
+            div.className =
+            "submission";
+
+            if(submission.revealed)
+            div.classList.add("revealed");
+
+            if(
+                playerId === data.judge &&
+                allSent &&
+                !submission.revealed
+            )
+            div.classList.add("clickable");
+
+            if(
+                data.winner &&
+                data.winner.id === id
+            )
+            div.classList.add("winner");
+
+            if(
+                data.winner &&
+                data.winner.id !== id
+            )
+            div.classList.add("loser");
+
+            const inner =
+            document.createElement("div");
+
+            inner.className =
+            "card-inner";
+
+            const back =
+            document.createElement("div");
+
+            back.className =
+            "card-face card-back";
+
+            back.textContent = "🃏";
+
+            const front =
+            document.createElement("div");
+
+            front.className =
+            "card-face card-front";
+
+            front.textContent =
+            submission.card;
+
+            inner.append(back,front);
+            div.appendChild(inner);
+
+            div.onclick =
+            async () => {
+
+                if(
+                    playerId !==
+                    data.judge
+                )
+                return;
+
+                if(!allSent)
+                return;
+
+                if(!submission.revealed){
+
+                    await update(
+                        ref(
+                            db,
+                            "rooms/" +
+                            room +
+                            "/submissions/" +
+                            id
+                        ),
+                        {
+                            revealed:true
+                        }
+                    );
+
+                    return;
+
+                }
+
+                const fresh =
+                Object.values(
+                    data.submissions
+                )
+                .every(
+                    item =>
+                    item.revealed === true
+                );
+
+                if(!fresh)
+                return;
+
+                await chooseWinner(
+                    data,
+                    id
+                );
+
+            };
+
+            box.appendChild(div);
+
+        })
+    );
+
+}
+
+
+/* ESCOLHER VENCEDOR */
+
+async function chooseWinner(
+data,
+winnerId
+){
+
+    const submission =
+    data.submissions[
+        winnerId
+    ];
+
+
+    const winner =
+    data.players[
+        winnerId
+    ];
+
+
+    const currentScore =
+    winner.score || 0;
+
+
+    await update(
+        ref(
+            db,
+            "rooms/" + room
+        ),
+        {
+
+            status:"winner",
+
+            winner:{
+                id:winnerId,
+                name:winner.name,
+                card:submission.card
+            },
+
+            ["players/" +
+            winnerId +
+            "/score"]:
+            currentScore + 1
+
+        }
+    );
+
+}
+
+
+/* MOSTRAR VENCEDOR */
+
+function renderWinner(data){
+
+    const winner =
+    data.winner;
+
+
+    if(!winner)
+    return;
+
+
+    document
+    .getElementById("winnerName")
+    .textContent =
+    winner.name;
+
+
+    document
+    .getElementById("winnerCard")
+    .textContent =
+    winner.card;
+
+
+    document
+    .getElementById("overlay")
+    .classList
+    .add("show");
+
+
+    const next =
+    document
+    .getElementById("next");
+
+
+    next.style.display =
+    playerId === data.host
+    ?
+    "block"
+    :
+    "none";
+
+}
+
+
+/* PRÓXIMA RODADA */
+
+document
+.getElementById("next")
+.addEventListener(
+"click",
+async () => {
+
+    const snap =
+    await get(
+        ref(
+            db,
+            "rooms/" + room
+        )
+    );
+
+
+    if(!snap.exists())
+    return;
+
+
+    const data =
+    snap.val();
+
+
+    if(playerId !== data.host)
+    return;
+
+
+    const players =
+    Object.keys(data.players);
+
+
+    const currentJudgeIndex =
+    players.indexOf(data.judge);
+
+
+    const nextJudge =
+    players[
+        (
+            currentJudgeIndex + 1
+        )
+        %
+        players.length
+    ];
+
+
+    handCards = [];
+    selected = null;
+
+
+    document
+    .getElementById("overlay")
+    .classList
+    .remove("show");
+
+
+    await update(
+        ref(
+            db,
+            "rooms/" + room
+        ),
+        {
+
+            status:"playing",
+
+            round:
+            (data.round || 0) + 1,
+
+            judge:
+            nextJudge,
+
+            blackCard:
+            blackCards[
+                Math.floor(
+                    Math.random() *
+                    blackCards.length
+                )
+            ],
+
+            submissions:{},
+
+            winner:null
+
+        }
+    );
+
+}
+);
+
+</script>
+
+</body>
+</html>
+
+ 
