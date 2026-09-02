@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Cartas Contra Talys</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -42,78 +45,129 @@ main {
     padding: 25px;
 }
 
-/* TELA INICIAL */
+.screen {
+    display: none;
+}
 
-#menu {
+.screen.active {
+    display: block;
+}
+
+#home {
     text-align: center;
-    padding: 70px 20px;
+    padding: 50px 20px;
 }
 
-#menu h2 {
-    font-size: 3rem;
-    margin-bottom: 10px;
+#home h2 {
+    font-size: 2.5rem;
 }
 
-#menu p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin: 8px auto;
+    border: 2px solid #111;
+    border-radius: 10px;
+    font-size: 1rem;
 }
 
 button {
     border: none;
     border-radius: 10px;
-    padding: 15px 25px;
+    padding: 15px 22px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
+    margin: 5px;
     transition: 0.2s;
 }
 
 button:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
-#playButton {
+.primary {
     background: #111;
     color: white;
-    font-size: 1.3rem;
+}
+
+.secondary {
+    background: white;
+    color: #111;
+    border: 2px solid #111;
+}
+
+.error {
+    color: #b00020;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* LOBBY */
+
+.room-code {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    background: #111;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    display: inline-block;
+    margin: 15px 0;
+}
+
+.players-list {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+.player {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.player:last-child {
+    border-bottom: none;
+}
+
+.host-tag {
+    font-size: 0.8rem;
+    background: #111;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-left: 8px;
 }
 
 /* JOGO */
 
-#game {
-    display: none;
-}
-
 .info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+    gap: 15px;
+    margin-bottom: 20px;
     font-weight: bold;
+    flex-wrap: wrap;
 }
-
-/* CARTA PRETA */
 
 .black-card {
     background: #111;
     color: white;
     border-radius: 16px;
     padding: 35px;
-    min-height: 250px;
+    min-height: 240px;
     display: flex;
     align-items: center;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     font-weight: bold;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    margin-bottom: 35px;
-}
-
-/* CARTAS BRANCAS */
-
-.cards-title {
-    font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 .white-cards {
@@ -126,7 +180,7 @@ button:hover {
     background: white;
     border-radius: 14px;
     padding: 20px;
-    min-height: 170px;
+    min-height: 160px;
     display: flex;
     align-items: center;
     font-weight: bold;
@@ -136,101 +190,288 @@ button:hover {
 }
 
 .white-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-7px);
 }
 
 .white-card.selected {
-    background: #ddd;
     outline: 4px solid #111;
+    background: #ddd;
 }
 
-/* RESULTADO */
-
-#result {
-    display: none;
-    margin-top: 30px;
+#submissionsStatus {
+    margin-top: 25px;
     text-align: center;
+    font-weight: bold;
 }
 
-#result h2 {
-    font-size: 1.5rem;
+#hostControls {
+    text-align: center;
+    margin-top: 20px;
 }
 
-#nextButton {
-    margin-top: 15px;
-    background: #111;
-    color: white;
+#submittedMessage {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 20px 0;
 }
-
-/* MOBILE */
 
 @media (max-width: 600px) {
-    #menu h2 {
-        font-size: 2.2rem;
+
+    main {
+        padding: 15px;
     }
 
     .black-card {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
         min-height: 200px;
     }
 
     .white-cards {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .room-code {
+        font-size: 1.7rem;
+    }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
 <header>
-    <h1>🃏 CARTAS CONTRA TALYS</h1>
-    <p>Um jogo onde sua dignidade é opcional.</p>
+
+<h1>🃏 CARTAS CONTRA TALYS</h1>
+
+<p>Um jogo onde sua dignidade é opcional.</p>
+
 </header>
+
 
 <main>
 
-<section id="menu">
-    <h2>Cartas Contra Talys</h2>
-    <p>Escolha a resposta mais absurda possível.</p>
 
-    <button id="playButton">▶ JOGAR</button>
+<!-- HOME -->
+
+<section id="home" class="screen active">
+
+<h2>Cartas Contra Talys</h2>
+
+<p>Entre numa sala ou crie o seu próprio caos.</p>
+
+<input
+id="playerName"
+type="text"
+maxlength="20"
+placeholder="Seu nome"
+>
+
+<br>
+
+<button
+id="createRoomButton"
+class="primary"
+>
+🏠 CRIAR SALA
+</button>
+
+<br>
+
+<input
+id="roomCodeInput"
+type="text"
+maxlength="6"
+placeholder="Código da sala"
+style="text-transform: uppercase;"
+>
+
+<br>
+
+<button
+id="joinRoomButton"
+class="secondary"
+>
+🔑 ENTRAR NA SALA
+</button>
+
+<div
+id="homeError"
+class="error"
+></div>
+
 </section>
 
-<section id="game">
 
-    <div class="info">
-        <div>Pontos: <span id="score">0</span></div>
-        <div>Rodada: <span id="round">1</span></div>
-    </div>
 
-    <div class="black-card" id="blackCard">
-        Carta preta
-    </div>
+<!-- LOBBY -->
 
-    <div class="cards-title">
-        Escolha sua resposta:
-    </div>
+<section id="lobby" class="screen">
 
-    <div class="white-cards" id="whiteCards"></div>
+<h2>👥 Sala Multiplayer</h2>
 
-    <div id="result">
-        <h2 id="resultText"></h2>
+<p>Código da sala:</p>
 
-        <button id="nextButton">
-            PRÓXIMA RODADA →
-        </button>
-    </div>
+<div
+id="roomCodeDisplay"
+class="room-code"
+>
+------
+</div>
+
+<p>Compartilha esse código com teus amigos.</p>
+
+<div
+class="players-list"
+>
+
+<h3>Jogadores</h3>
+
+<div id="playersList"></div>
+
+</div>
+
+<div
+id="startArea"
+style="text-align:center; margin-top:25px;"
+></div>
+
+<p
+id="lobbyMessage"
+style="text-align:center;"
+></p>
 
 </section>
+
+
+
+<!-- GAME -->
+
+<section id="game" class="screen">
+
+<div class="info">
+
+<div>
+👥 Sala:
+<span id="gameRoomCode"></span>
+</div>
+
+<div>
+🔄 Rodada:
+<span id="roundNumber"></span>
+</div>
+
+<div>
+🎮 Jogadores:
+<span id="playerCount"></span>
+</div>
+
+</div>
+
+
+<div
+class="black-card"
+id="blackCard"
+>
+Aguardando...
+</div>
+
+
+<h3>Escolha sua resposta:</h3>
+
+<div
+class="white-cards"
+id="whiteCards"
+></div>
+
+
+<div
+id="submittedMessage"
+></div>
+
+
+<div
+id="submissionsStatus"
+></div>
+
+
+<div
+id="hostControls"
+></div>
+
+</section>
+
 
 </main>
 
-<script>
 
-/* =========================
+
+<script type="module">
+
+/* =====================================
+   FIREBASE
+===================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    set,
+    get,
+    update,
+    onValue,
+    onDisconnect
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCw5UmpciDeaBoV8_PsgDGUvohu0_kafMM",
+
+    authDomain:
+    "cartas-contra-humanidade-d91e3.firebaseapp.com",
+
+    databaseURL:
+    "https://cartas-contra-humanidade-d91e3-default-rtdb.firebaseio.com/",
+
+    projectId:
+    "cartas-contra-humanidade-d91e3",
+
+    storageBucket:
+    "cartas-contra-humanidade-d91e3.firebasestorage.app",
+
+    messagingSenderId:
+    "546342432146",
+
+    appId:
+    "1:546342432146:web:17e6bb977a3d7e1a57a54b",
+
+    measurementId:
+    "G-5L3EH6HBGB"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+const database =
+getDatabase(app);
+
+
+
+/* =====================================
    CARTAS PRETAS
-========================= */
+===================================== */
 
 const blackCards = [
 
@@ -277,9 +518,10 @@ const blackCards = [
 ];
 
 
-/* =========================
+
+/* =====================================
    CARTAS BRANCAS
-========================= */
+===================================== */
 
 const whiteCards = [
 
@@ -386,152 +628,644 @@ const whiteCards = [
 ];
 
 
-/* =========================
+
+/* =====================================
    VARIÁVEIS
-========================= */
+===================================== */
 
-let score = 0;
-let round = 1;
-let currentBlackCard = "";
-let hand = [];
+let playerId =
+localStorage.getItem("cartasPlayerId");
 
 
-/* =========================
-   ELEMENTOS
-========================= */
+if (!playerId) {
 
-const menu = document.getElementById("menu");
-const game = document.getElementById("game");
-const playButton = document.getElementById("playButton");
-const blackCardElement = document.getElementById("blackCard");
-const whiteCardsElement = document.getElementById("whiteCards");
-const scoreElement = document.getElementById("score");
-const roundElement = document.getElementById("round");
-const result = document.getElementById("result");
-const resultText = document.getElementById("resultText");
-const nextButton = document.getElementById("nextButton");
+    playerId =
+    "player_" +
+    Math.random()
+    .toString(36)
+    .substring(2, 12);
 
+    localStorage.setItem(
+        "cartasPlayerId",
+        playerId
+    );
 
-/* =========================
-   FUNÇÃO ALEATÓRIA
-========================= */
-
-function randomItem(array) {
-    return array[Math.floor(Math.random() * array.length)];
 }
 
 
-/* =========================
-   INICIAR JOGO
-========================= */
+let currentRoom = null;
 
-playButton.addEventListener("click", () => {
+let currentPlayerName = null;
 
-    menu.style.display = "none";
-    game.style.display = "block";
+let currentHand = [];
 
-    startRound();
-
-});
+let submitted = false;
 
 
-/* =========================
-   INICIAR RODADA
-========================= */
 
-function startRound() {
+/* =====================================
+   ELEMENTOS
+===================================== */
 
-    result.style.display = "none";
+const home =
+document.getElementById("home");
 
-    currentBlackCard = randomItem(blackCards);
+const lobby =
+document.getElementById("lobby");
 
-    blackCardElement.textContent = currentBlackCard;
+const game =
+document.getElementById("game");
 
-    hand = [];
+const playerNameInput =
+document.getElementById("playerName");
 
-    /* Evita repetir cartas na mesma mão */
+const createRoomButton =
+document.getElementById("createRoomButton");
 
-    const shuffledCards = [...whiteCards]
-        .sort(() => Math.random() - 0.5);
+const joinRoomButton =
+document.getElementById("joinRoomButton");
 
-    hand = shuffledCards.slice(0, 7);
+const roomCodeInput =
+document.getElementById("roomCodeInput");
 
-    whiteCardsElement.innerHTML = "";
+const homeError =
+document.getElementById("homeError");
 
-    hand.forEach(card => {
+const roomCodeDisplay =
+document.getElementById("roomCodeDisplay");
 
-        const cardElement =
-            document.createElement("div");
+const playersList =
+document.getElementById("playersList");
 
-        cardElement.className = "white-card";
+const startArea =
+document.getElementById("startArea");
 
-        cardElement.textContent = card;
+const lobbyMessage =
+document.getElementById("lobbyMessage");
 
-        cardElement.addEventListener(
-            "click",
-            () => selectCard(card, cardElement)
-        );
+const gameRoomCode =
+document.getElementById("gameRoomCode");
 
-        whiteCardsElement.appendChild(cardElement);
+const roundNumber =
+document.getElementById("roundNumber");
+
+const playerCount =
+document.getElementById("playerCount");
+
+const blackCardElement =
+document.getElementById("blackCard");
+
+const whiteCardsElement =
+document.getElementById("whiteCards");
+
+const submissionsStatus =
+document.getElementById("submissionsStatus");
+
+const submittedMessage =
+document.getElementById("submittedMessage");
+
+const hostControls =
+document.getElementById("hostControls");
+
+
+
+/* =====================================
+   TELAS
+===================================== */
+
+function showScreen(screen) {
+
+    document
+    .querySelectorAll(".screen")
+    .forEach(item => {
+
+        item.classList.remove("active");
 
     });
 
+    screen.classList.add("active");
+
 }
 
 
-/* =========================
-   ESCOLHER CARTA
-========================= */
 
-function selectCard(card, selectedElement) {
+/* =====================================
+   CÓDIGO DA SALA
+===================================== */
 
-    document
-        .querySelectorAll(".white-card")
-        .forEach(element => {
+function generateRoomCode() {
 
-            element.classList.remove("selected");
-            element.style.pointerEvents = "none";
+    const characters =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-        });
+    let code = "";
+
+    for (
+        let i = 0;
+        i < 6;
+        i++
+    ) {
+
+        code +=
+        characters[
+            Math.floor(
+                Math.random() *
+                characters.length
+            )
+        ];
+
+    }
+
+    return code;
+
+}
 
 
-    selectedElement.classList.add("selected");
+
+/* =====================================
+   PEGAR NOME
+===================================== */
+
+function getPlayerName() {
+
+    const name =
+    playerNameInput.value
+    .trim();
+
+    if (!name) {
+
+        homeError.textContent =
+        "Digite seu nome primeiro 😭";
+
+        return null;
+
+    }
+
+    return name;
+
+}
 
 
-    const completed =
-        currentBlackCard.replace(
-            "______",
-            card
+
+/* =====================================
+   CRIAR SALA
+===================================== */
+
+createRoomButton
+.addEventListener(
+"click",
+async () => {
+
+    const name =
+    getPlayerName();
+
+    if (!name) return;
+
+    homeError.textContent = "";
+
+    currentPlayerName = name;
+
+    let code =
+    generateRoomCode();
+
+
+    const roomReference =
+    ref(
+        database,
+        "rooms/" + code
+    );
+
+
+    await set(
+        roomReference,
+        {
+
+            host: playerId,
+
+            status: "lobby",
+
+            round: 0,
+
+            blackCard: "",
+
+            players: {
+
+                [playerId]: {
+
+                    name:
+                    currentPlayerName,
+
+                    joinedAt:
+                    Date.now()
+
+                }
+
+            },
+
+            submissions: {}
+
+        }
+    );
+
+
+    currentRoom = code;
+
+    enterRoom();
+
+}
+);
+
+
+
+/* =====================================
+   ENTRAR EM SALA
+===================================== */
+
+joinRoomButton
+.addEventListener(
+"click",
+async () => {
+
+    const name =
+    getPlayerName();
+
+    if (!name) return;
+
+
+    const code =
+    roomCodeInput.value
+    .trim()
+    .toUpperCase();
+
+
+    if (!code) {
+
+        homeError.textContent =
+        "Digite o código da sala 😭";
+
+        return;
+
+    }
+
+
+    const roomReference =
+    ref(
+        database,
+        "rooms/" + code
+    );
+
+
+    const snapshot =
+    await get(roomReference);
+
+
+    if (!snapshot.exists()) {
+
+        homeError.textContent =
+        "Essa sala não existe 💀";
+
+        return;
+
+    }
+
+
+    const room =
+    snapshot.val();
+
+
+    if (
+        room.status === "playing"
+    ) {
+
+        homeError.textContent =
+        "A partida já começou 😭";
+
+        return;
+
+    }
+
+
+    currentPlayerName = name;
+
+    currentRoom = code;
+
+
+    await set(
+
+        ref(
+            database,
+            "rooms/" +
+            currentRoom +
+            "/players/" +
+            playerId
+        ),
+
+        {
+
+            name:
+            currentPlayerName,
+
+            joinedAt:
+            Date.now()
+
+        }
+
+    );
+
+
+    enterRoom();
+
+}
+);
+
+
+
+/* =====================================
+   ENTRAR NO LOBBY
+===================================== */
+
+function enterRoom() {
+
+    roomCodeDisplay.textContent =
+    currentRoom;
+
+    gameRoomCode.textContent =
+    currentRoom;
+
+    showScreen(lobby);
+
+
+    const playerReference =
+    ref(
+        database,
+        "rooms/" +
+        currentRoom +
+        "/players/" +
+        playerId
+    );
+
+
+    onDisconnect(
+        playerReference
+    )
+    .remove();
+
+
+    listenToRoom();
+
+}
+
+
+
+/* =====================================
+   OUVIR SALA EM TEMPO REAL
+===================================== */
+
+function listenToRoom() {
+
+    const roomReference =
+    ref(
+        database,
+        "rooms/" +
+        currentRoom
+    );
+
+
+    onValue(
+        roomReference,
+        snapshot => {
+
+            if (
+                !snapshot.exists()
+            ) return;
+
+
+            const room =
+            snapshot.val();
+
+
+            updateLobby(room);
+
+
+            if (
+                room.status ===
+                "playing"
+            ) {
+
+                showGame(room);
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =====================================
+   ATUALIZAR LOBBY
+===================================== */
+
+function updateLobby(room) {
+
+    if (
+        room.status !==
+        "lobby"
+    ) return;
+
+
+    const players =
+    room.players || {};
+
+
+    const playersArray =
+    Object.entries(players);
+
+
+    playersList.innerHTML = "";
+
+
+    playersArray.forEach(
+        ([id, player]) => {
+
+            const div =
+            document.createElement("div");
+
+            div.className =
+            "player";
+
+            div.textContent =
+            player.name;
+
+
+            if (
+                id === room.host
+            ) {
+
+                const hostTag =
+                document
+                .createElement("span");
+
+                hostTag.className =
+                "host-tag";
+
+                hostTag.textContent =
+                "DONO";
+
+                div.appendChild(
+                    hostTag
+                );
+
+            }
+
+
+            playersList.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    startArea.innerHTML = "";
+
+
+    if (
+        room.host === playerId
+    ) {
+
+        const button =
+        document.createElement(
+            "button"
+        );
+
+        button.className =
+        "primary";
+
+        button.textContent =
+        "▶ INICIAR PARTIDA";
+
+
+        button.addEventListener(
+        "click",
+        () => startGame(room)
         );
 
 
-    resultText.textContent = completed;
+        startArea.appendChild(
+            button
+        );
 
-    result.style.display = "block";
 
+        lobbyMessage.textContent =
+        "Você é o dono da sala 👑";
 
-    score++;
+    }
 
-    scoreElement.textContent = score;
+    else {
+
+        lobbyMessage.textContent =
+        "Aguardando o dono iniciar a partida...";
+
+    }
 
 }
 
 
-/* =========================
-   PRÓXIMA RODADA
-========================= */
 
-nextButton.addEventListener("click", () => {
+/* =====================================
+   INICIAR JOGO
+===================================== */
 
-    round++;
+async function startGame(room) {
 
-    roundElement.textContent = round;
+    const firstBlackCard =
+    randomItem(blackCards);
 
-    startRound();
 
-});
+    await update(
 
-</script>
+        ref(
+            database,
+            "rooms/" +
+            currentRoom
+        ),
 
-</body>
-  </html>
+        {
+
+            status:
+            "playing",
+
+            round:
+            1,
+
+            blackCard:
+            firstBlackCard,
+
+            submissions:
+            {}
+
+        }
+
+    );
+
+}
+
+
+
+/* =====================================
+   MOSTRAR JOGO
+===================================== */
+
+function showGame(room) {
+
+    showScreen(game);
+
+
+    roundNumber.textContent =
+    room.round || 1;
+
+
+    blackCardElement.textContent =
+    room.blackCard;
+
+
+    const players =
+    room.players || {};
+
+
+    const totalPlayers =
+    Object.keys(players)
+    .length;
+
+
+    playerCount.textContent =
+    totalPlayers;
+
+
+    const submissions =
+    room.submissions || {};
+
+
+    const submittedCount =
+    Object.keys(submissions)
+    .length;
+
+
+    submissionsStatus.textContent =
+    `${submittedCount} de ${totalPlayers} jogadores responderam`;
+
+
+    if (
+        !currentHand.length ||
+        currentHand.round !== room.round
+    ) {
+
+        createHand(room.round);
+
+    }
+
+
+    if (
+        subm
