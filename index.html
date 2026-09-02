@@ -7,6 +7,7 @@
 <title>Cartas Contra Talys</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -20,6 +21,8 @@ body {
     color: white;
 }
 
+/* TELAS */
+
 .screen {
     display: none;
     min-height: 100vh;
@@ -29,7 +32,10 @@ body {
     display: flex;
 }
 
-/* HOME */
+
+/* =========================
+HOME
+========================= */
 
 #home {
     flex-direction: column;
@@ -107,7 +113,10 @@ button:active {
     color: #ffb0b0;
 }
 
-/* LOBBY */
+
+/* =========================
+LOBBY
+========================= */
 
 #lobby {
     flex-direction: column;
@@ -169,14 +178,32 @@ button:active {
     color: black;
 }
 
-/* JOGO */
+
+/* =========================
+JOGO
+========================= */
 
 #game {
     flex-direction: column;
     min-height: 100vh;
     padding: 15px;
-    padding-bottom: 200px;
+    padding-bottom: 210px;
     background: radial-gradient(circle at center, #3a3a3a, #121212 80%);
+}
+
+.game-top {
+    text-align: center;
+}
+
+#judgeInfo {
+    color: #ffd95a;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#roundInfo {
+    color: #aaa;
+    margin-top: 10px;
 }
 
 #opponents {
@@ -184,6 +211,7 @@ button:active {
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
+    margin-top: 15px;
 }
 
 .opponent {
@@ -193,17 +221,19 @@ button:active {
     font-size: 14px;
 }
 
+.opponent.judge {
+    border: 2px solid #ffd95a;
+}
+
+
+/* CENTRO */
+
 .game-center {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-#roundInfo {
-    color: #aaa;
-    margin-bottom: 15px;
 }
 
 #blackCard {
@@ -219,17 +249,56 @@ button:active {
     font-size: 21px;
     font-weight: bold;
     line-height: 1.35;
+    box-shadow: 0 15px 40px rgba(0,0,0,.5);
 }
 
 #gameStatus {
     margin-top: 18px;
     color: #aaa;
+    text-align: center;
 }
+
+
+/* CARTAS ENVIADAS */
+
+#submissionsArea {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.submission-card {
+    width: 150px;
+    min-height: 190px;
+    background: white;
+    color: black;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,.4);
+}
+
+.submission-card:hover {
+    transform: translateY(-5px);
+}
+
+
+/* BOTÃO JOGAR */
 
 #playButton {
     display: none;
     position: fixed;
-    bottom: 185px;
+    bottom: 190px;
     left: 50%;
     transform: translateX(-50%);
     width: auto;
@@ -242,6 +311,9 @@ button:active {
 #playButton.show {
     display: block;
 }
+
+
+/* MÃO */
 
 .hand-area {
     position: fixed;
@@ -283,6 +355,7 @@ button:active {
     font-size: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,.4);
     transition: transform .15s;
+    cursor: pointer;
 }
 
 .white-card:first-child {
@@ -295,13 +368,85 @@ button:active {
 
 .white-card.disabled {
     opacity: .5;
+    cursor: default;
 }
+
+
+/* PLACAR */
+
+.scoreboard {
+    width: 100%;
+    max-width: 550px;
+    margin: 20px auto;
+    background: #292929;
+    border-radius: 18px;
+    padding: 10px;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+.score-row:last-child {
+    border-bottom: none;
+}
+
+
+/* VENCEDOR */
+
+#winnerOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(0,0,0,.88);
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+#winnerOverlay.show {
+    display: flex;
+}
+
+.winner-box {
+    width: 100%;
+    max-width: 420px;
+    background: #292929;
+    border-radius: 25px;
+    padding: 30px;
+    text-align: center;
+}
+
+.winner-card {
+    background: white;
+    color: black;
+    padding: 25px;
+    border-radius: 18px;
+    margin: 20px 0;
+    font-weight: bold;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nextRoundButton {
+    background: white;
+    color: black;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- HOME -->
+
+<!-- ================= HOME ================= -->
+
 <section id="home" class="screen active">
 
     <div class="logo">
@@ -311,15 +456,29 @@ button:active {
 
     <div class="menu-card">
 
-        <input id="playerName" placeholder="Seu nome" maxlength="20">
+        <input
+            id="playerName"
+            placeholder="Seu nome"
+            maxlength="20"
+        >
 
-        <button id="createRoomButton">🏠 CRIAR SALA</button>
+        <button id="createRoomButton">
+            🏠 CRIAR SALA
+        </button>
 
-        <div class="divider">──── OU ────</div>
+        <div class="divider">
+            ──── OU ────
+        </div>
 
-        <input id="roomCodeInput" placeholder="Código da sala" maxlength="6">
+        <input
+            id="roomCodeInput"
+            placeholder="Código da sala"
+            maxlength="6"
+        >
 
-        <button id="joinRoomButton">🔑 ENTRAR</button>
+        <button id="joinRoomButton">
+            🔑 ENTRAR
+        </button>
 
         <div id="message"></div>
 
@@ -328,13 +487,23 @@ button:active {
 </section>
 
 
-<!-- LOBBY -->
+<!-- ================= LOBBY ================= -->
+
 <section id="lobby" class="screen">
 
     <div class="top-bar">
+
         <strong>🃏 SALA</strong>
-        <div id="roomCodeDisplay" class="room-code">------</div>
+
+        <div
+            id="roomCodeDisplay"
+            class="room-code"
+        >
+            ------
+        </div>
+
     </div>
+
 
     <div class="lobby-content">
 
@@ -344,11 +513,17 @@ button:active {
             Mande o código para seus amigos.
         </p>
 
-        <div class="players-box" id="playersList"></div>
+
+        <div
+            class="players-box"
+            id="playersList"
+        ></div>
+
 
         <button id="startButton">
             ▶ INICIAR PARTIDA
         </button>
+
 
         <p id="lobbyMessage"></p>
 
@@ -357,30 +532,55 @@ button:active {
 </section>
 
 
-<!-- JOGO -->
+<!-- ================= JOGO ================= -->
+
 <section id="game" class="screen">
 
-    <div id="opponents"></div>
-
-    <div class="game-center">
+    <div class="game-top">
 
         <div id="roundInfo">
             RODADA 1
         </div>
 
+        <div id="judgeInfo">
+            👑 Juiz: ...
+        </div>
+
+    </div>
+
+
+    <div id="opponents"></div>
+
+
+    <div class="game-center">
+
         <div id="blackCard">
-            Aguardando a carta...
+            Aguardando...
         </div>
 
         <div id="gameStatus">
             Escolha uma carta.
         </div>
 
+
+        <div id="submissionsArea"></div>
+
     </div>
+
+
+    <div class="scoreboard">
+
+        <strong>🏆 PLACAR</strong>
+
+        <div id="scoreList"></div>
+
+    </div>
+
 
     <button id="playButton">
         JOGAR CARTA
     </button>
+
 
     <div class="hand-area">
 
@@ -395,11 +595,39 @@ button:active {
 </section>
 
 
+<!-- ================= VENCEDOR ================= -->
+
+<div id="winnerOverlay">
+
+    <div class="winner-box">
+
+        <h2>🏆 VENCEDOR DA RODADA</h2>
+
+        <h3 id="winnerName"></h3>
+
+        <div
+            id="winnerCard"
+            class="winner-card"
+        ></div>
+
+        <button id="nextRoundButton">
+            PRÓXIMA RODADA ▶
+        </button>
+
+    </div>
+
+</div>
+
+
 <script type="module">
+
+
+/* ================= FIREBASE ================= */
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
     getDatabase,
@@ -436,63 +664,139 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+const app =
+    initializeApp(firebaseConfig);
+
+const database =
+    getDatabase(app);
 
 
-/* CARTAS */
+/* ================= CARTAS ================= */
 
 const blackCards = [
+
     "O jantar acabou quando alguém mencionou ______.",
+
     "Minha família nunca mais falou comigo depois de ______.",
+
     "A pior coisa encontrada no meu celular foi ______.",
+
     "O debate ficou estranho quando alguém falou sobre ______.",
-    "A polícia ficou interessada depois de encontrar ______."
+
+    "A polícia ficou interessada depois de encontrar ______.",
+
+    "A reunião terminou quando alguém revelou ______.",
+
+    "Meu advogado pediu para eu nunca mais mencionar ______.",
+
+    "A internet decidiu me cancelar depois de ______.",
+
+    "A ceia de Natal foi destruída por ______.",
+
+    "Tudo começou com a frase: 'Não conta para ninguém sobre ______.'"
+
 ];
+
 
 const whiteCards = [
+
     "Meu tio dando uma opinião que ninguém pediu.",
+
     "Um segredo de família extremamente inconveniente.",
+
     "A pior mensagem enviada para a pessoa errada.",
+
     "Uma opinião política destruindo o almoço.",
+
     "A frase 'eu posso explicar'.",
+
     "Um áudio que nunca deveria existir.",
+
     "Ser o motivo de uma reunião urgente.",
+
     "Aquele parente que ninguém convidou.",
+
     "Uma captura de tela extremamente comprometedora.",
+
     "Descobrir que todo mundo sabia.",
-    "Uma desculpa pior que o crime.",
+
+    "Uma desculpa pior que o problema.",
+
     "O silêncio depois de uma pergunta proibida.",
+
     "Meu histórico de pesquisa.",
+
     "Uma discussão completamente sem sentido.",
-    "A pior decisão da minha vida."
+
+    "A pior decisão da minha vida.",
+
+    "Uma conversa que deveria ter ficado no grupo privado.",
+
+    "O momento em que a brincadeira deixou de ser brincadeira.",
+
+    "Uma opinião tão ruim que acabou com a amizade.",
+
+    "Ser banido de algum lugar.",
+
+    "Descobrir tarde demais que alguém estava gravando."
+
 ];
 
 
-/* VARIÁVEIS */
+/* ================= VARIÁVEIS ================= */
 
-let playerId = localStorage.getItem("cartasPlayerId");
+let playerId =
+    localStorage.getItem(
+        "cartasPlayerId"
+    );
+
 
 if (!playerId) {
-    playerId = "p_" + Math.random().toString(36).slice(2);
-    localStorage.setItem("cartasPlayerId", playerId);
+
+    playerId =
+        "p_" +
+        Math.random()
+        .toString(36)
+        .slice(2);
+
+
+    localStorage.setItem(
+        "cartasPlayerId",
+        playerId
+    );
+
 }
 
+
 let currentRoom = null;
+
 let currentName = null;
+
 let selectedCard = null;
+
 let currentHand = [];
+
+let currentRound = null;
+
 let submitted = false;
 
 
-/* ELEMENTOS */
+/* ================= ELEMENTOS ================= */
 
-const home = document.getElementById("home");
-const lobby = document.getElementById("lobby");
-const game = document.getElementById("game");
+const home =
+    document.getElementById("home");
 
-const playerNameInput = document.getElementById("playerName");
-const roomCodeInput = document.getElementById("roomCodeInput");
+const lobby =
+    document.getElementById("lobby");
+
+const game =
+    document.getElementById("game");
+
+const playerNameInput =
+    document.getElementById("playerName");
+
+const roomCodeInput =
+    document.getElementById("roomCodeInput");
 
 const createRoomButton =
     document.getElementById("createRoomButton");
@@ -515,8 +819,20 @@ const playersList =
 const lobbyMessage =
     document.getElementById("lobbyMessage");
 
+const roundInfo =
+    document.getElementById("roundInfo");
+
+const judgeInfo =
+    document.getElementById("judgeInfo");
+
+const opponents =
+    document.getElementById("opponents");
+
 const blackCard =
     document.getElementById("blackCard");
+
+const gameStatus =
+    document.getElementById("gameStatus");
 
 const hand =
     document.getElementById("hand");
@@ -524,100 +840,215 @@ const hand =
 const playButton =
     document.getElementById("playButton");
 
-const opponents =
-    document.getElementById("opponents");
+const submissionsArea =
+    document.getElementById("submissionsArea");
 
-const gameStatus =
-    document.getElementById("gameStatus");
+const scoreList =
+    document.getElementById("scoreList");
+
+const winnerOverlay =
+    document.getElementById("winnerOverlay");
+
+const winnerName =
+    document.getElementById("winnerName");
+
+const winnerCard =
+    document.getElementById("winnerCard");
+
+const nextRoundButton =
+    document.getElementById("nextRoundButton");
 
 
-/* TELAS */
+/* ================= TELAS ================= */
 
 function showScreen(screen) {
 
-    document.querySelectorAll(".screen")
-        .forEach(s => s.classList.remove("active"));
+    document
+    .querySelectorAll(".screen")
+    .forEach(
+        function (s) {
 
-    screen.classList.add("active");
+            s.classList
+            .remove("active");
+
+        }
+    );
+
+
+    screen.classList
+    .add("active");
 
 }
 
 
-/* CÓDIGO */
+/* ================= CÓDIGO DA SALA ================= */
 
 function generateRoomCode() {
 
     const chars =
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    let code = "";
+    let code =
+        "";
 
-    for (let i = 0; i < 6; i++) {
-        code += chars[
-            Math.floor(
-                Math.random() * chars.length
-            )
-        ];
+
+    for (
+        let i = 0;
+        i < 6;
+        i++
+    ) {
+
+        code +=
+            chars[
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            ];
+
     }
+
 
     return code;
 
 }
 
 
-/* CRIAR SALA */
+/* ================= EMBARALHAR ================= */
 
-createRoomButton.addEventListener(
+function shuffle(array) {
+
+    const copy =
+        [...array];
+
+
+    for (
+        let i =
+            copy.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            copy[i],
+            copy[j]
+        ] =
+        [
+            copy[j],
+            copy[i]
+        ];
+
+    }
+
+
+    return copy;
+
+}
+
+
+/* ================= CRIAR SALA ================= */
+
+createRoomButton
+.addEventListener(
     "click",
     async function () {
 
         try {
 
             const name =
-                playerNameInput.value.trim();
+                playerNameInput
+                .value
+                .trim();
+
 
             if (!name) {
+
                 message.textContent =
                     "Digite seu nome.";
+
                 return;
+
             }
 
-            currentName = name;
+
+            currentName =
+                name;
+
 
             const code =
                 generateRoomCode();
 
-            message.textContent =
-                "Criando sala...";
 
             await set(
+
                 ref(
                     database,
-                    "rooms/" + code
+                    "rooms/" +
+                    code
                 ),
+
                 {
-                    host: playerId,
-                    status: "lobby",
-                    round: 0,
+
+                    host:
+                        playerId,
+
+                    status:
+                        "lobby",
+
+                    round:
+                        0,
+
+                    judge:
+                        null,
+
+                    blackCard:
+                        "",
+
+                    winner:
+                        null,
 
                     players: {
+
                         [playerId]: {
-                            name: name
+
+                            name:
+                                name,
+
+                            score:
+                                0
+
                         }
-                    }
+
+                    },
+
+                    submissions:
+                        {}
+
                 }
+
             );
 
-            currentRoom = code;
+
+            currentRoom =
+                code;
+
 
             enterLobby();
 
-        } catch (error) {
+        }
 
-            console.error(error);
+        catch (error) {
 
             message.textContent =
-                "Erro: " + error.message;
+                "Erro: " +
+                error.message;
 
         }
 
@@ -625,52 +1056,98 @@ createRoomButton.addEventListener(
 );
 
 
-/* ENTRAR */
+/* ================= ENTRAR ================= */
 
-joinRoomButton.addEventListener(
+joinRoomButton
+.addEventListener(
     "click",
     async function () {
 
         try {
 
             const name =
-                playerNameInput.value.trim();
+                playerNameInput
+                .value
+                .trim();
+
 
             const code =
-                roomCodeInput.value
-                    .trim()
-                    .toUpperCase();
+                roomCodeInput
+                .value
+                .trim()
+                .toUpperCase();
+
 
             if (!name) {
+
                 message.textContent =
                     "Digite seu nome.";
+
                 return;
+
             }
 
+
             if (!code) {
+
                 message.textContent =
                     "Digite o código.";
+
                 return;
+
             }
+
 
             const snapshot =
                 await get(
+
                     ref(
                         database,
-                        "rooms/" + code
+                        "rooms/" +
+                        code
                     )
+
                 );
 
-            if (!snapshot.exists()) {
+
+            if (
+                !snapshot.exists()
+            ) {
+
                 message.textContent =
                     "Sala não encontrada.";
+
                 return;
+
             }
 
-            currentName = name;
-            currentRoom = code;
+
+            const room =
+                snapshot.val();
+
+
+            if (
+                room.status !==
+                "lobby"
+            ) {
+
+                message.textContent =
+                    "Essa partida já começou.";
+
+                return;
+
+            }
+
+
+            currentName =
+                name;
+
+            currentRoom =
+                code;
+
 
             await set(
+
                 ref(
                     database,
                     "rooms/" +
@@ -678,19 +1155,29 @@ joinRoomButton.addEventListener(
                     "/players/" +
                     playerId
                 ),
+
                 {
-                    name: name
+
+                    name:
+                        name,
+
+                    score:
+                        0
+
                 }
+
             );
+
 
             enterLobby();
 
-        } catch (error) {
+        }
 
-            console.error(error);
+        catch (error) {
 
             message.textContent =
-                "Erro: " + error.message;
+                "Erro: " +
+                error.message;
 
         }
 
@@ -698,309 +1185,57 @@ joinRoomButton.addEventListener(
 );
 
 
-/* LOBBY */
+/* ================= ENTRAR LOBBY ================= */
 
 function enterLobby() {
 
-    showScreen(lobby);
+    showScreen(
+        lobby
+    );
+
 
     roomCodeDisplay.textContent =
         currentRoom;
 
+
     const roomRef =
         ref(
             database,
-            "rooms/" + currentRoom
+            "rooms/" +
+            currentRoom
         );
+
 
     onValue(
         roomRef,
         function (snapshot) {
 
-            if (!snapshot.exists()) return;
+            if (
+                !snapshot.exists()
+            ) return;
+
 
             const room =
                 snapshot.val();
 
-            updateRoom(room);
 
-        }
-    );
+            if (
+                room.status ===
+                "lobby"
+            ) {
 
-}
-
-
-function updateRoom(room) {
-
-    if (room.status === "playing") {
-        startGameScreen(room);
-        return;
-    }
-
-    playersList.innerHTML = "";
-
-    const players =
-        room.players || {};
-
-    Object.entries(players)
-        .forEach(
-            function ([id, player]) {
-
-                const row =
-                    document.createElement("div");
-
-                row.className =
-                    "player-row";
-
-                row.innerHTML =
-                    "<span>" +
-                    player.name +
-                    "</span>" +
-                    (
-                        id === room.host
-                        ? "<span class='host'>CRIADOR</span>"
-                        : ""
-                    );
-
-                playersList.appendChild(row);
-
-            }
-        );
-
-    if (room.host === playerId) {
-
-        startButton.style.display =
-            "block";
-
-        lobbyMessage.textContent =
-            "Você pode iniciar a partida.";
-
-    } else {
-
-        startButton.style.display =
-            "none";
-
-        lobbyMessage.textContent =
-            "Esperando o criador.";
-
-    }
-
-}
-
-
-/* INICIAR */
-
-startButton.addEventListener(
-    "click",
-    async function () {
-
-        try {
-
-            const card =
-                blackCards[
-                    Math.floor(
-                        Math.random() *
-                        blackCards.length
-                    )
-                ];
-
-            await update(
-                ref(
-                    database,
-                    "rooms/" +
-                    currentRoom
-                ),
-                {
-                    status: "playing",
-                    round: 1,
-                    blackCard: card
-                }
-            );
-
-        } catch (error) {
-
-            console.error(error);
-
-            lobbyMessage.textContent =
-                "Erro: " + error.message;
-
-        }
-
-    }
-);
-
-
-/* JOGO */
-
-function startGameScreen(room) {
-
-    showScreen(game);
-
-    blackCard.textContent =
-        room.blackCard ||
-        "Aguardando...";
-
-    createHand();
-
-    renderOpponents(
-        room.players || {}
-    );
-
-}
-
-
-function createHand() {
-
-    if (currentHand.length > 0) return;
-
-    const shuffled =
-        [...whiteCards]
-        .sort(
-            () =>
-                Math.random() - 0.5
-        );
-
-    currentHand =
-        shuffled.slice(0, 7);
-
-    renderHand();
-
-}
-
-
-function renderHand() {
-
-    hand.innerHTML = "";
-
-    currentHand.forEach(
-        function (card) {
-
-            const cardElement =
-                document.createElement("div");
-
-            cardElement.className =
-                "white-card";
-
-            cardElement.textContent =
-                card;
-
-            if (card === selectedCard) {
-                cardElement.classList.add(
-                    "selected"
-                );
-            }
-
-            if (!submitted) {
-
-                cardElement.addEventListener(
-                    "click",
-                    function () {
-
-                        selectedCard =
-                            card;
-
-                        renderHand();
-
-                        playButton.classList.add(
-                            "show"
-                        );
-
-                    }
+                updateLobby(
+                    room
                 );
 
             }
 
-            hand.appendChild(
-                cardElement
-            );
 
-        }
-    );
+            else if (
+                room.status ===
+                "playing"
+            ) {
 
-}
-
-
-function renderOpponents(players) {
-
-    opponents.innerHTML = "";
-
-    Object.entries(players)
-        .forEach(
-            function ([id, player]) {
-
-                if (id === playerId) return;
-
-                const element =
-                    document.createElement("div");
-
-                element.className =
-                    "opponent";
-
-                element.textContent =
-                    player.name +
-                    " 🃏 7";
-
-                opponents.appendChild(
-                    element
-                );
-
-            }
-        );
-
-}
-
-
-/* JOGAR */
-
-playButton.addEventListener(
-    "click",
-    async function () {
-
-        if (
-            !selectedCard ||
-            submitted
-        ) return;
-
-        try {
-
-            submitted = true;
-
-            playButton.classList.remove(
-                "show"
-            );
-
-            gameStatus.textContent =
-                "Carta enviada!";
-
-            await set(
-                ref(
-                    database,
-                    "rooms/" +
-                    currentRoom +
-                    "/submissions/" +
-                    playerId
-                ),
-                {
-                    card: selectedCard,
-                    name: currentName
-                }
-            );
-
-        } catch (error) {
-
-            submitted = false;
-
-            console.error(error);
-
-            gameStatus.textContent =
-                "Erro ao enviar carta.";
-
-        }
-
-    }
-);
-
-</script>
-
-</body>
-    </html>
+                updateGame(
+                    room
+ 
