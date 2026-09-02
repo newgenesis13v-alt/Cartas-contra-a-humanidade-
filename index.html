@@ -7,7 +7,6 @@
 <title>Cartas Contra Talys</title>
 
 <style>
-
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -17,14 +16,9 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    background: #202020;
+    background: #181818;
     color: white;
-    overflow-x: hidden;
 }
-
-/* =========================
-   TELAS
-========================= */
 
 .screen {
     display: none;
@@ -35,109 +29,96 @@ body {
     display: flex;
 }
 
-/* =========================
-   TELA INICIAL
-========================= */
+/* HOME */
 
 #home {
-    min-height: 100vh;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     padding: 25px;
     text-align: center;
-    background:
-        radial-gradient(circle at top, #444, #161616 65%);
+    background: radial-gradient(circle at top, #444, #151515 70%);
 }
 
 .logo {
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 .logo h1 {
+    font-size: clamp(2.5rem, 11vw, 4rem);
     margin: 0;
-    font-size: clamp(2.4rem, 10vw, 4rem);
-    letter-spacing: -2px;
+    line-height: 0.9;
 }
 
 .logo p {
     color: #aaa;
-    margin-top: 10px;
 }
 
 .menu-card {
     width: 100%;
     max-width: 420px;
-    background: #2b2b2b;
-    border-radius: 25px;
-    padding: 25px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    background: #292929;
+    padding: 22px;
+    border-radius: 24px;
 }
 
 input {
     width: 100%;
-    padding: 16px;
-    margin: 8px 0;
     border: none;
     border-radius: 14px;
-    font-size: 1rem;
-    outline: none;
+    padding: 16px;
+    margin: 7px 0;
+    font-size: 16px;
 }
 
 button {
+    width: 100%;
     border: none;
     border-radius: 14px;
-    padding: 16px;
-    font-size: 1rem;
+    padding: 17px;
+    margin: 7px 0;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.15s;
 }
 
 button:active {
-    transform: scale(0.96);
+    transform: scale(0.97);
 }
 
-.main-button {
-    width: 100%;
-    margin: 8px 0;
-    background: #ffffff;
-    color: #111;
+#createRoomButton {
+    background: white;
+    color: black;
 }
 
-.join-button {
-    width: 100%;
-    margin: 8px 0;
-    background: #444;
+#joinRoomButton {
+    background: #484848;
     color: white;
 }
 
 .divider {
-    margin: 20px 0;
-    color: #777;
+    margin: 15px 0;
+    color: #999;
 }
 
-.message {
+#message {
     min-height: 25px;
-    margin-top: 12px;
-    color: #ffb4b4;
-    font-weight: bold;
+    margin-top: 8px;
+    color: #ffb0b0;
 }
 
-/* =========================
-   LOBBY
-========================= */
+/* LOBBY */
 
 #lobby {
     flex-direction: column;
-    padding: 25px;
-    background: #202020;
+    padding: 20px;
+    background: #181818;
 }
 
 .top-bar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 }
 
 .room-code {
@@ -145,115 +126,72 @@ button:active {
     color: black;
     padding: 10px 16px;
     border-radius: 12px;
-    font-weight: bold;
     letter-spacing: 3px;
+    font-weight: bold;
 }
 
-.lobby-center {
+.lobby-content {
     width: 100%;
-    max-width: 600px;
+    max-width: 550px;
     margin: auto;
     text-align: center;
 }
 
 .players-box {
-    background: #2c2c2c;
-    border-radius: 22px;
-    padding: 15px;
+    background: #292929;
+    border-radius: 20px;
     margin: 25px 0;
-    text-align: left;
+    padding: 10px;
 }
 
 .player-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 15px;
     border-bottom: 1px solid #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .player-row:last-child {
     border-bottom: none;
 }
 
-.player-circle {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #555;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.player-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.host-label {
-    font-size: 0.7rem;
+.host {
+    font-size: 11px;
     background: white;
     color: black;
-    padding: 4px 8px;
+    padding: 5px 8px;
     border-radius: 8px;
 }
 
-.start-button {
-    width: 100%;
-    padding: 20px;
+#startButton {
     background: white;
     color: black;
-    font-size: 1.1rem;
 }
 
-/* =========================
-   JOGO
-========================= */
+/* JOGO */
 
 #game {
     flex-direction: column;
     min-height: 100vh;
-    position: relative;
-    background:
-        radial-gradient(circle at center, #383838, #161616 80%);
-    padding: 12px;
-    padding-bottom: 190px;
+    padding: 15px;
+    padding-bottom: 200px;
+    background: radial-gradient(circle at center, #3a3a3a, #121212 80%);
 }
 
-/* Jogadores */
-
-.opponents {
+#opponents {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 .opponent {
-    background: #2b2b2b;
-    border-radius: 16px;
+    background: #292929;
+    border-radius: 15px;
     padding: 10px 13px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    font-size: 14px;
 }
-
-.opponent-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: #555;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Centro */
 
 .game-center {
     flex: 1;
@@ -261,93 +199,90 @@ button:active {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
 }
 
-.round-info {
+#roundInfo {
     color: #aaa;
     margin-bottom: 15px;
 }
 
-.black-card {
+#blackCard {
     width: min(85vw, 390px);
-    aspect-ratio: 0.68;
     min-height: 280px;
-    background: #080808;
+    background: black;
     border-radius: 22px;
-    padding: 28px;
+    padding: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: clamp(1.25rem, 5vw, 1.8rem);
+    font-size: 21px;
     font-weight: bold;
     line-height: 1.35;
-    box-shadow:
-        0 20px 40px rgba(0,0,0,0.5);
 }
 
-.black-card-label {
-    position: absolute;
-    transform: translateY(-115px);
-}
-
-.game-status {
-    margin-top: 20px;
+#gameStatus {
+    margin-top: 18px;
     color: #aaa;
-    font-size: 0.9rem;
 }
 
-/* MÃO DO JOGADOR */
+#playButton {
+    display: none;
+    position: fixed;
+    bottom: 185px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    padding: 15px 30px;
+    background: white;
+    color: black;
+    z-index: 10;
+}
+
+#playButton.show {
+    display: block;
+}
 
 .hand-area {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 12px 8px 18px;
-    background:
-        linear-gradient(
-            transparent,
-            rgba(0,0,0,0.95) 30%
-        );
+    padding: 10px;
+    background: linear-gradient(transparent, #000 30%);
 }
 
 .hand-title {
     text-align: center;
-    font-size: 0.8rem;
     color: #aaa;
-    margin-bottom: 8px;
+    font-size: 12px;
+    margin-bottom: 5px;
 }
 
-.hand {
-    width: 100%;
+#hand {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     overflow-x: auto;
-    padding: 12px 5px;
+    padding: 15px 5px;
 }
 
 .white-card {
-    flex: 0 0 125px;
-    height: 170px;
+    flex: 0 0 115px;
+    height: 160px;
     background: white;
     color: black;
     border-radius: 13px;
+    margin-left: -38px;
     padding: 12px;
-    font-size: 0.78rem;
-    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-left: -35px;
-    cursor: pointer;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.35);
-    transition:
-        transform 0.18s,
-        margin 0.18s;
+    font-weight: bold;
+    font-size: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.4);
+    transition: transform .15s;
 }
 
 .white-card:first-child {
@@ -355,58 +290,18 @@ button:active {
 }
 
 .white-card.selected {
-    transform: translateY(-35px);
+    transform: translateY(-30px);
 }
 
 .white-card.disabled {
-    opacity: 0.5;
+    opacity: .5;
 }
-
-/* Jogar carta */
-
-.play-button {
-    position: fixed;
-    bottom: 195px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    color: black;
-    padding: 14px 28px;
-    display: none;
-    z-index: 10;
-}
-
-.play-button.show {
-    display: block;
-}
-
-/* Mobile */
-
-@media (max-width: 500px) {
-
-    .white-card {
-        flex-basis: 110px;
-        height: 155px;
-        margin-left: -45px;
-        font-size: 0.72rem;
-    }
-
-    .black-card {
-        min-height: 260px;
-    }
-
-}
-
 </style>
 </head>
 
 <body>
 
-
-<!-- =========================
-     HOME
-========================= -->
-
+<!-- HOME -->
 <section id="home" class="screen active">
 
     <div class="logo">
@@ -416,148 +311,76 @@ button:active {
 
     <div class="menu-card">
 
-        <input
-            id="playerName"
-            placeholder="Seu nome"
-            maxlength="20"
-        >
+        <input id="playerName" placeholder="Seu nome" maxlength="20">
 
-        <button
-            id="createRoomButton"
-            class="main-button"
-        >
-            🏠 CRIAR SALA
-        </button>
+        <button id="createRoomButton">🏠 CRIAR SALA</button>
 
-        <div class="divider">
-            ─── ou entre em uma sala ───
-        </div>
+        <div class="divider">──── OU ────</div>
 
-        <input
-            id="roomCodeInput"
-            placeholder="Código da sala"
-            maxlength="6"
-        >
+        <input id="roomCodeInput" placeholder="Código da sala" maxlength="6">
 
-        <button
-            id="joinRoomButton"
-            class="join-button"
-        >
-            🔑 ENTRAR
-        </button>
+        <button id="joinRoomButton">🔑 ENTRAR</button>
 
-        <div
-            id="message"
-            class="message"
-        ></div>
+        <div id="message"></div>
 
     </div>
 
 </section>
 
 
-
-<!-- =========================
-     LOBBY
-========================= -->
-
+<!-- LOBBY -->
 <section id="lobby" class="screen">
 
     <div class="top-bar">
-
         <strong>🃏 SALA</strong>
-
-        <div
-            id="roomCodeDisplay"
-            class="room-code"
-        >
-            ------
-        </div>
-
+        <div id="roomCodeDisplay" class="room-code">------</div>
     </div>
 
-
-    <div class="lobby-center">
+    <div class="lobby-content">
 
         <h1>Esperando jogadores...</h1>
 
-        <p style="color:#aaa;">
-            Envie o código da sala para seus amigos.
+        <p style="color:#aaa">
+            Mande o código para seus amigos.
         </p>
 
+        <div class="players-box" id="playersList"></div>
 
-        <div class="players-box">
+        <button id="startButton">
+            ▶ INICIAR PARTIDA
+        </button>
 
-            <div
-                id="playersList"
-            ></div>
-
-        </div>
-
-
-        <div
-            id="startArea"
-        ></div>
-
-        <p
-            id="lobbyMessage"
-            style="color:#aaa;"
-        ></p>
+        <p id="lobbyMessage"></p>
 
     </div>
 
 </section>
 
 
-
-<!-- =========================
-     JOGO
-========================= -->
-
+<!-- JOGO -->
 <section id="game" class="screen">
 
-
-    <div
-        id="opponents"
-        class="opponents"
-    ></div>
-
+    <div id="opponents"></div>
 
     <div class="game-center">
 
-        <div
-            id="roundInfo"
-            class="round-info"
-        >
+        <div id="roundInfo">
             RODADA 1
         </div>
 
-
-        <div
-            id="blackCard"
-            class="black-card"
-        >
-            Aguardando carta...
+        <div id="blackCard">
+            Aguardando a carta...
         </div>
 
-
-        <div
-            id="gameStatus"
-            class="game-status"
-        >
+        <div id="gameStatus">
             Escolha uma carta.
         </div>
 
     </div>
 
-
-    <button
-        id="playButton"
-        class="play-button"
-    >
+    <button id="playButton">
         JOGAR CARTA
     </button>
-
 
     <div class="hand-area">
 
@@ -565,45 +388,32 @@ button:active {
             SUAS CARTAS
         </div>
 
-        <div
-            id="hand"
-            class="hand"
-        ></div>
+        <div id="hand"></div>
 
     </div>
-
 
 </section>
 
 
-
 <script type="module">
-
-
-/* =========================
-   FIREBASE
-========================= */
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
 import {
     getDatabase,
     ref,
     set,
-    get,
     update,
-    onValue,
-    onDisconnect
+    get,
+    onValue
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
 const firebaseConfig = {
 
-    apiKey:
-        "AIzaSyCw5UmpciDeaBoV8_PsgDGUvohu0_kafMM",
+    apiKey: "AIzaSyCw5UmpciDeaBoV8_PsgDGUvohu0_kafMM",
 
     authDomain:
         "cartas-contra-humanidade-d91e3.firebaseapp.com",
@@ -626,183 +436,72 @@ const firebaseConfig = {
 };
 
 
-const app =
-    initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 
-const database =
-    getDatabase(app);
-
-
-
-/* =========================
-   CARTAS
-========================= */
+/* CARTAS */
 
 const blackCards = [
-
-    "O jantar de família terminou quando alguém decidiu falar sobre ______.",
-
-    "A escola realizou uma reunião de emergência depois de descobrir ______.",
-
-    "Meu advogado olhou para mim e perguntou: 'Por que você achou que ______ era uma boa ideia?'",
-
-    "Ninguém estava preparado para a opinião do meu tio sobre ______.",
-
-    "A discussão sobre aborto ficou ainda pior depois que alguém trouxe ______ para o debate.",
-
-    "O problema começou quando alguém tentou justificar ______ dizendo 'é só minha opinião'.",
-
-    "Minha reputação acabou oficialmente depois de ______.",
-
-    "O grupo inteiro ficou em silêncio quando perceberam ______.",
-
-    "A pior coisa que alguém pode dizer antes de uma reunião familiar é: 'Precisamos conversar sobre ______.'",
-
-    "A polícia ficou particularmente interessada quando encontrou ______.",
-
-    "O pedido de desculpas teria funcionado melhor se não mencionasse ______.",
-
-    "A internet decidiu que eu precisava ser cancelado por causa de ______.",
-
-    "O debate político acabou quando alguém gritou ______.",
-
-    "Minha mãe perguntou por que havia ______ no meu quarto, e eu percebi que minha vida tinha acabado.",
-
-    "A frase 'não é racismo, mas...' foi imediatamente seguida por ______.",
-
-    "A reunião terminou cedo depois que alguém revelou ______.",
-
-    "Meu maior erro foi acreditar que ninguém descobriria ______.",
-
-    "No tribunal, a única coisa que eu conseguia pensar era: 'Tudo isso por causa de ______?'",
-
-    "A ceia de Natal nunca mais foi a mesma depois de ______.",
-
-    "E foi naquele momento que percebi que deveria ter ficado calado sobre ______."
-
+    "O jantar acabou quando alguém mencionou ______.",
+    "Minha família nunca mais falou comigo depois de ______.",
+    "A pior coisa encontrada no meu celular foi ______.",
+    "O debate ficou estranho quando alguém falou sobre ______.",
+    "A polícia ficou interessada depois de encontrar ______."
 ];
-
 
 const whiteCards = [
-
-    "Racismo disfarçado de 'liberdade de expressão'.",
-    "Um debate sobre aborto conduzido por pessoas completamente desinformadas.",
-    "A hipocrisia aparecendo pontualmente no almoço de família.",
-    "Meu tio explicando por que 'na época dele era melhor'.",
-    "Um comentário preconceituoso seguido de 'foi só brincadeira'.",
-    "Educação sexual feita por quem claramente precisava de educação sexual.",
-    "A falência moral de uma reunião de família.",
-    "Descobrir que o problema realmente era eu.",
-    "Uma opinião política que matou completamente o clima.",
-    "Tentar justificar o injustificável por quarenta minutos.",
+    "Meu tio dando uma opinião que ninguém pediu.",
+    "Um segredo de família extremamente inconveniente.",
+    "A pior mensagem enviada para a pessoa errada.",
+    "Uma opinião política destruindo o almoço.",
+    "A frase 'eu posso explicar'.",
+    "Um áudio que nunca deveria existir.",
     "Ser o motivo de uma reunião urgente.",
-    "A polícia fazendo perguntas específicas demais.",
-    "Meu advogado recomendando que eu simplesmente fique calado.",
-    "Uma mensagem apagada rápido demais para não ser suspeita.",
-    "'Não conta isso para ninguém.'",
-    "O grupo inteiro fazendo um pacto de silêncio.",
-    "Descobrir por que aquela porta estava trancada.",
-    "Um segredo de família que deveria ter morrido com alguém.",
-    "Aquele parente que ninguém convida, mas sempre aparece.",
-    "Ser cancelado por algo que eu realmente fiz.",
-    "Uma desculpa tão ruim que virou uma confissão.",
-    "A pior pessoa possível tendo acesso a um microfone.",
-    "Um discurso motivacional completamente inadequado para a situação.",
-    "Um trauma coletivo causado por uma única frase.",
-    "O silêncio depois de alguém perguntar 'isso é sério?'.",
-    "Uma discussão tão absurda que ninguém lembra como começou.",
-    "Descobrir que meu histórico de pesquisa não era privado.",
-    "Aquele áudio que deveria ter sido destruído imediatamente.",
-    "Uma captura de tela enviada para a pessoa errada.",
-    "Ser banido de um lugar onde eu nunca deveria ter entrado.",
-    "Uma crise de reputação em tempo integral.",
-    "O momento em que a brincadeira deixou de ser brincadeira.",
-    "Uma reunião familiar terminando em lados opostos.",
-    "Alguém dizendo 'eu posso explicar' sem ter absolutamente nenhuma explicação.",
-    "A pessoa mais ignorante da sala falando com confiança.",
-    "Um debate moral conduzido por quem não possui moral alguma.",
-    "A frase 'eu tenho amigos que são assim'.",
-    "Preconceito suficiente para acabar com a sobremesa.",
-    "Descobrir que alguém gravou tudo.",
-    "Uma tentativa de parecer inteligente que terminou em desastre público.",
-    "A falência completa da minha imagem.",
-    "Uma opinião tão ruim que uniu pessoas que se odiavam.",
-    "A pior decisão da minha vida documentada em vídeo.",
-    "O constrangimento de perceber que todo mundo sabia.",
-    "Uma confissão feita no momento mais inconveniente possível.",
-    "Um pedido de desculpas escrito por uma equipe jurídica.",
-    "O motivo pelo qual não sou mais bem-vindo naquela casa.",
-    "Uma conversa séria que terminou em caos absoluto.",
-    "A humanidade decepcionando a humanidade.",
-    "Tudo aquilo que meu terapeuta provavelmente ouviria e respiraria fundo."
-
+    "Aquele parente que ninguém convidou.",
+    "Uma captura de tela extremamente comprometedora.",
+    "Descobrir que todo mundo sabia.",
+    "Uma desculpa pior que o crime.",
+    "O silêncio depois de uma pergunta proibida.",
+    "Meu histórico de pesquisa.",
+    "Uma discussão completamente sem sentido.",
+    "A pior decisão da minha vida."
 ];
 
 
-/* =========================
-   VARIÁVEIS
-========================= */
+/* VARIÁVEIS */
 
-let playerId =
-    localStorage.getItem(
-        "cartasPlayerId"
-    );
-
+let playerId = localStorage.getItem("cartasPlayerId");
 
 if (!playerId) {
-
-    playerId =
-        "player_" +
-        Math.random()
-            .toString(36)
-            .substring(2, 12);
-
-    localStorage.setItem(
-        "cartasPlayerId",
-        playerId
-    );
-
+    playerId = "p_" + Math.random().toString(36).slice(2);
+    localStorage.setItem("cartasPlayerId", playerId);
 }
 
-
 let currentRoom = null;
-
-let currentPlayerName = null;
-
-let currentHand = [];
-
-let currentHandRound = null;
-
+let currentName = null;
 let selectedCard = null;
-
+let currentHand = [];
 let submitted = false;
 
 
-/* =========================
-   ELEMENTOS
-========================= */
+/* ELEMENTOS */
 
-const home =
-    document.getElementById("home");
+const home = document.getElementById("home");
+const lobby = document.getElementById("lobby");
+const game = document.getElementById("game");
 
-const lobby =
-    document.getElementById("lobby");
-
-const game =
-    document.getElementById("game");
-
-const playerNameInput =
-    document.getElementById("playerName");
-
-const roomCodeInput =
-    document.getElementById("roomCodeInput");
+const playerNameInput = document.getElementById("playerName");
+const roomCodeInput = document.getElementById("roomCodeInput");
 
 const createRoomButton =
     document.getElementById("createRoomButton");
 
 const joinRoomButton =
     document.getElementById("joinRoomButton");
+
+const startButton =
+    document.getElementById("startButton");
 
 const message =
     document.getElementById("message");
@@ -813,23 +512,11 @@ const roomCodeDisplay =
 const playersList =
     document.getElementById("playersList");
 
-const startArea =
-    document.getElementById("startArea");
-
 const lobbyMessage =
     document.getElementById("lobbyMessage");
 
-const opponents =
-    document.getElementById("opponents");
-
-const roundInfo =
-    document.getElementById("roundInfo");
-
 const blackCard =
     document.getElementById("blackCard");
-
-const gameStatus =
-    document.getElementById("gameStatus");
 
 const hand =
     document.getElementById("hand");
@@ -837,53 +524,40 @@ const hand =
 const playButton =
     document.getElementById("playButton");
 
+const opponents =
+    document.getElementById("opponents");
+
+const gameStatus =
+    document.getElementById("gameStatus");
 
 
-/* =========================
-   TELAS
-========================= */
+/* TELAS */
 
 function showScreen(screen) {
 
-    document
-        .querySelectorAll(".screen")
-        .forEach(item => {
-
-            item.classList.remove("active");
-
-        });
+    document.querySelectorAll(".screen")
+        .forEach(s => s.classList.remove("active"));
 
     screen.classList.add("active");
 
 }
 
 
-
-/* =========================
-   GERAR SALA
-========================= */
+/* CÓDIGO */
 
 function generateRoomCode() {
 
-    const characters =
+    const chars =
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
     let code = "";
 
-    for (
-        let i = 0;
-        i < 6;
-        i++
-    ) {
-
-        code +=
-            characters[
-                Math.floor(
-                    Math.random() *
-                    characters.length
-                )
-            ];
-
+    for (let i = 0; i < 6; i++) {
+        code += chars[
+            Math.floor(
+                Math.random() * chars.length
+            )
+        ];
     }
 
     return code;
@@ -891,192 +565,442 @@ function generateRoomCode() {
 }
 
 
+/* CRIAR SALA */
 
-/* =========================
-   PEGAR NOME
-========================= */
+createRoomButton.addEventListener(
+    "click",
+    async function () {
 
-function getPlayerName() {
+        try {
 
-    const name =
-        playerNameInput.value.trim();
+            const name =
+                playerNameInput.value.trim();
 
-    if (!name) {
-
-        message.textContent =
-            "Digite seu nome primeiro.";
-
-        return null;
-
-    }
-
-    return name;
-
-}
-
-
-
-/* =========================
-   CRIAR SALA
-========================= */
-
-createRoomButton
-.addEventListener(
-"click",
-async () => {
-
-    try {
-
-        const name =
-            getPlayerName();
-
-        if (!name) return;
-
-        message.textContent =
-            "Criando sala...";
-
-
-        currentPlayerName =
-            name;
-
-
-        const roomCode =
-            generateRoomCode();
-
-
-        await set(
-
-            ref(
-                database,
-                "rooms/" +
-                roomCode
-            ),
-
-            {
-
-                host:
-                    playerId,
-
-                status:
-                    "lobby",
-
-                round:
-                    0,
-
-                blackCard:
-                    "",
-
-                players: {
-
-                    [playerId]: {
-
-                        name:
-                            currentPlayerName,
-
-                        joinedAt:
-                            Date.now()
-
-                    }
-
-                },
-
-                submissions: {}
-
+            if (!name) {
+                message.textContent =
+                    "Digite seu nome.";
+                return;
             }
 
-        );
+            currentName = name;
 
+            const code =
+                generateRoomCode();
 
-        currentRoom =
-            roomCode;
+            message.textContent =
+                "Criando sala...";
 
+            await set(
+                ref(
+                    database,
+                    "rooms/" + code
+                ),
+                {
+                    host: playerId,
+                    status: "lobby",
+                    round: 0,
 
-        message.textContent =
-            "";
+                    players: {
+                        [playerId]: {
+                            name: name
+                        }
+                    }
+                }
+            );
 
+            currentRoom = code;
 
-        enterRoom();
+            enterLobby();
 
+        } catch (error) {
 
-    } catch (error) {
+            console.error(error);
 
-        console.error(error);
+            message.textContent =
+                "Erro: " + error.message;
 
-        message.textContent =
-            "Erro ao criar sala: " +
-            error.message;
+        }
 
     }
-
-}
 );
 
 
+/* ENTRAR */
 
-/* =========================
-   ENTRAR EM SALA
-========================= */
+joinRoomButton.addEventListener(
+    "click",
+    async function () {
 
-joinRoomButton
-.addEventListener(
-"click",
-async () => {
+        try {
 
-    try {
+            const name =
+                playerNameInput.value.trim();
 
-        const name =
-            getPlayerName();
+            const code =
+                roomCodeInput.value
+                    .trim()
+                    .toUpperCase();
 
-        if (!name) return;
+            if (!name) {
+                message.textContent =
+                    "Digite seu nome.";
+                return;
+            }
 
+            if (!code) {
+                message.textContent =
+                    "Digite o código.";
+                return;
+            }
 
-        const code =
-            roomCodeInput.value
-            .trim()
-            .toUpperCase();
+            const snapshot =
+                await get(
+                    ref(
+                        database,
+                        "rooms/" + code
+                    )
+                );
 
+            if (!snapshot.exists()) {
+                message.textContent =
+                    "Sala não encontrada.";
+                return;
+            }
 
-        if (!code) {
+            currentName = name;
+            currentRoom = code;
 
-            message.textContent =
-                "Digite o código da sala.";
-
-            return;
-
-        }
-
-
-        const roomSnapshot =
-            await get(
-
+            await set(
                 ref(
                     database,
                     "rooms/" +
-                    code
-                )
-
+                    code +
+                    "/players/" +
+                    playerId
+                ),
+                {
+                    name: name
+                }
             );
 
+            enterLobby();
 
-        if (
-            !roomSnapshot.exists()
-        ) {
+        } catch (error) {
+
+            console.error(error);
 
             message.textContent =
-                "Essa sala não existe.";
-
-            return;
+                "Erro: " + error.message;
 
         }
 
+    }
+);
 
-        const room =
-            roomSnapshot.val();
 
+/* LOBBY */
+
+function enterLobby() {
+
+    showScreen(lobby);
+
+    roomCodeDisplay.textContent =
+        currentRoom;
+
+    const roomRef =
+        ref(
+            database,
+            "rooms/" + currentRoom
+        );
+
+    onValue(
+        roomRef,
+        function (snapshot) {
+
+            if (!snapshot.exists()) return;
+
+            const room =
+                snapshot.val();
+
+            updateRoom(room);
+
+        }
+    );
+
+}
+
+
+function updateRoom(room) {
+
+    if (room.status === "playing") {
+        startGameScreen(room);
+        return;
+    }
+
+    playersList.innerHTML = "";
+
+    const players =
+        room.players || {};
+
+    Object.entries(players)
+        .forEach(
+            function ([id, player]) {
+
+                const row =
+                    document.createElement("div");
+
+                row.className =
+                    "player-row";
+
+                row.innerHTML =
+                    "<span>" +
+                    player.name +
+                    "</span>" +
+                    (
+                        id === room.host
+                        ? "<span class='host'>CRIADOR</span>"
+                        : ""
+                    );
+
+                playersList.appendChild(row);
+
+            }
+        );
+
+    if (room.host === playerId) {
+
+        startButton.style.display =
+            "block";
+
+        lobbyMessage.textContent =
+            "Você pode iniciar a partida.";
+
+    } else {
+
+        startButton.style.display =
+            "none";
+
+        lobbyMessage.textContent =
+            "Esperando o criador.";
+
+    }
+
+}
+
+
+/* INICIAR */
+
+startButton.addEventListener(
+    "click",
+    async function () {
+
+        try {
+
+            const card =
+                blackCards[
+                    Math.floor(
+                        Math.random() *
+                        blackCards.length
+                    )
+                ];
+
+            await update(
+                ref(
+                    database,
+                    "rooms/" +
+                    currentRoom
+                ),
+                {
+                    status: "playing",
+                    round: 1,
+                    blackCard: card
+                }
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            lobbyMessage.textContent =
+                "Erro: " + error.message;
+
+        }
+
+    }
+);
+
+
+/* JOGO */
+
+function startGameScreen(room) {
+
+    showScreen(game);
+
+    blackCard.textContent =
+        room.blackCard ||
+        "Aguardando...";
+
+    createHand();
+
+    renderOpponents(
+        room.players || {}
+    );
+
+}
+
+
+function createHand() {
+
+    if (currentHand.length > 0) return;
+
+    const shuffled =
+        [...whiteCards]
+        .sort(
+            () =>
+                Math.random() - 0.5
+        );
+
+    currentHand =
+        shuffled.slice(0, 7);
+
+    renderHand();
+
+}
+
+
+function renderHand() {
+
+    hand.innerHTML = "";
+
+    currentHand.forEach(
+        function (card) {
+
+            const cardElement =
+                document.createElement("div");
+
+            cardElement.className =
+                "white-card";
+
+            cardElement.textContent =
+                card;
+
+            if (card === selectedCard) {
+                cardElement.classList.add(
+                    "selected"
+                );
+            }
+
+            if (!submitted) {
+
+                cardElement.addEventListener(
+                    "click",
+                    function () {
+
+                        selectedCard =
+                            card;
+
+                        renderHand();
+
+                        playButton.classList.add(
+                            "show"
+                        );
+
+                    }
+                );
+
+            }
+
+            hand.appendChild(
+                cardElement
+            );
+
+        }
+    );
+
+}
+
+
+function renderOpponents(players) {
+
+    opponents.innerHTML = "";
+
+    Object.entries(players)
+        .forEach(
+            function ([id, player]) {
+
+                if (id === playerId) return;
+
+                const element =
+                    document.createElement("div");
+
+                element.className =
+                    "opponent";
+
+                element.textContent =
+                    player.name +
+                    " 🃏 7";
+
+                opponents.appendChild(
+                    element
+                );
+
+            }
+        );
+
+}
+
+
+/* JOGAR */
+
+playButton.addEventListener(
+    "click",
+    async function () {
 
         if (
-            room.status ===
-            "playing"
-        ) {
+            !selectedCard ||
+            submitted
+        ) return;
 
-            message.textConte
+        try {
+
+            submitted = true;
+
+            playButton.classList.remove(
+                "show"
+            );
+
+            gameStatus.textContent =
+                "Carta enviada!";
+
+            await set(
+                ref(
+                    database,
+                    "rooms/" +
+                    currentRoom +
+                    "/submissions/" +
+                    playerId
+                ),
+                {
+                    card: selectedCard,
+                    name: currentName
+                }
+            );
+
+        } catch (error) {
+
+            submitted = false;
+
+            console.error(error);
+
+            gameStatus.textContent =
+                "Erro ao enviar carta.";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+    </html>
