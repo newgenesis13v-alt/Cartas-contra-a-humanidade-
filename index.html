@@ -21,8 +21,6 @@ body {
     color: white;
 }
 
-/* TELAS */
-
 .screen {
     display: none;
     min-height: 100vh;
@@ -33,9 +31,7 @@ body {
 }
 
 
-/* =========================
-HOME
-========================= */
+/* HOME */
 
 #home {
     flex-direction: column;
@@ -53,7 +49,7 @@ HOME
 .logo h1 {
     font-size: clamp(2.5rem, 11vw, 4rem);
     margin: 0;
-    line-height: 0.9;
+    line-height: .9;
 }
 
 .logo p {
@@ -89,10 +85,13 @@ button {
 }
 
 button:active {
-    transform: scale(0.97);
+    transform: scale(.97);
 }
 
-#createRoomButton {
+#createRoomButton,
+#startButton,
+#playButton,
+#nextRoundButton {
     background: white;
     color: black;
 }
@@ -114,14 +113,11 @@ button:active {
 }
 
 
-/* =========================
-LOBBY
-========================= */
+/* LOBBY */
 
 #lobby {
     flex-direction: column;
     padding: 20px;
-    background: #181818;
 }
 
 .top-bar {
@@ -158,7 +154,6 @@ LOBBY
     border-bottom: 1px solid #444;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .player-row:last-child {
@@ -173,21 +168,14 @@ LOBBY
     border-radius: 8px;
 }
 
-#startButton {
-    background: white;
-    color: black;
-}
 
-
-/* =========================
-JOGO
-========================= */
+/* JOGO */
 
 #game {
     flex-direction: column;
     min-height: 100vh;
     padding: 15px;
-    padding-bottom: 210px;
+    padding-bottom: 230px;
     background: radial-gradient(circle at center, #3a3a3a, #121212 80%);
 }
 
@@ -216,29 +204,25 @@ JOGO
 
 .opponent {
     background: #292929;
+    padding: 10px;
     border-radius: 15px;
-    padding: 10px 13px;
-    font-size: 14px;
 }
 
 .opponent.judge {
     border: 2px solid #ffd95a;
 }
 
-
-/* CENTRO */
-
 .game-center {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
 #blackCard {
     width: min(85vw, 390px);
-    min-height: 280px;
+    min-height: 260px;
+    margin-top: 30px;
     background: black;
     border-radius: 22px;
     padding: 25px;
@@ -248,8 +232,6 @@ JOGO
     text-align: center;
     font-size: 21px;
     font-weight: bold;
-    line-height: 1.35;
-    box-shadow: 0 15px 40px rgba(0,0,0,.5);
 }
 
 #gameStatus {
@@ -257,9 +239,6 @@ JOGO
     color: #aaa;
     text-align: center;
 }
-
-
-/* CARTAS ENVIADAS */
 
 #submissionsArea {
     width: 100%;
@@ -282,34 +261,24 @@ JOGO
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 14px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0,0,0,.4);
 }
 
-.submission-card:hover {
-    transform: translateY(-5px);
+.scoreboard {
+    width: 100%;
+    max-width: 550px;
+    margin: 20px auto;
+    background: #292929;
+    border-radius: 18px;
+    padding: 10px;
 }
 
-
-/* BOTÃO JOGAR */
-
-#playButton {
-    display: none;
-    position: fixed;
-    bottom: 190px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    padding: 15px 30px;
-    background: white;
-    color: black;
-    z-index: 10;
-}
-
-#playButton.show {
-    display: block;
+.score-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #444;
 }
 
 
@@ -328,15 +297,13 @@ JOGO
     text-align: center;
     color: #aaa;
     font-size: 12px;
-    margin-bottom: 5px;
 }
 
 #hand {
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: flex-start;
     overflow-x: auto;
-    padding: 15px 5px;
+    padding: 20px 10px;
 }
 
 .white-card {
@@ -345,7 +312,7 @@ JOGO
     background: white;
     color: black;
     border-radius: 13px;
-    margin-left: -38px;
+    margin-left: -35px;
     padding: 12px;
     display: flex;
     align-items: center;
@@ -353,9 +320,8 @@ JOGO
     text-align: center;
     font-weight: bold;
     font-size: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,.4);
-    transition: transform .15s;
     cursor: pointer;
+    transition: transform .15s;
 }
 
 .white-card:first-child {
@@ -363,35 +329,8 @@ JOGO
 }
 
 .white-card.selected {
-    transform: translateY(-30px);
-}
-
-.white-card.disabled {
-    opacity: .5;
-    cursor: default;
-}
-
-
-/* PLACAR */
-
-.scoreboard {
-    width: 100%;
-    max-width: 550px;
-    margin: 20px auto;
-    background: #292929;
-    border-radius: 18px;
-    padding: 10px;
-}
-
-.score-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #444;
-}
-
-.score-row:last-child {
-    border-bottom: none;
+    transform: translateY(-25px);
+    border: 4px solid #ffd95a;
 }
 
 
@@ -428,15 +367,6 @@ JOGO
     border-radius: 18px;
     margin: 20px 0;
     font-weight: bold;
-    min-height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#nextRoundButton {
-    background: white;
-    color: black;
 }
 
 </style>
@@ -445,7 +375,7 @@ JOGO
 <body>
 
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
 <section id="home" class="screen active">
 
@@ -456,11 +386,7 @@ JOGO
 
     <div class="menu-card">
 
-        <input
-            id="playerName"
-            placeholder="Seu nome"
-            maxlength="20"
-        >
+        <input id="playerName" placeholder="Seu nome" maxlength="20">
 
         <button id="createRoomButton">
             🏠 CRIAR SALA
@@ -470,11 +396,7 @@ JOGO
             ──── OU ────
         </div>
 
-        <input
-            id="roomCodeInput"
-            placeholder="Código da sala"
-            maxlength="6"
-        >
+        <input id="roomCodeInput" placeholder="Código da sala" maxlength="6">
 
         <button id="joinRoomButton">
             🔑 ENTRAR
@@ -487,7 +409,7 @@ JOGO
 </section>
 
 
-<!-- ================= LOBBY ================= -->
+<!-- LOBBY -->
 
 <section id="lobby" class="screen">
 
@@ -495,15 +417,11 @@ JOGO
 
         <strong>🃏 SALA</strong>
 
-        <div
-            id="roomCodeDisplay"
-            class="room-code"
-        >
+        <div id="roomCodeDisplay" class="room-code">
             ------
         </div>
 
     </div>
-
 
     <div class="lobby-content">
 
@@ -513,17 +431,11 @@ JOGO
             Mande o código para seus amigos.
         </p>
 
-
-        <div
-            class="players-box"
-            id="playersList"
-        ></div>
-
+        <div id="playersList" class="players-box"></div>
 
         <button id="startButton">
             ▶ INICIAR PARTIDA
         </button>
-
 
         <p id="lobbyMessage"></p>
 
@@ -532,7 +444,7 @@ JOGO
 </section>
 
 
-<!-- ================= JOGO ================= -->
+<!-- JOGO -->
 
 <section id="game" class="screen">
 
@@ -548,9 +460,7 @@ JOGO
 
     </div>
 
-
     <div id="opponents"></div>
-
 
     <div class="game-center">
 
@@ -562,11 +472,9 @@ JOGO
             Escolha uma carta.
         </div>
 
-
         <div id="submissionsArea"></div>
 
     </div>
-
 
     <div class="scoreboard">
 
@@ -575,12 +483,6 @@ JOGO
         <div id="scoreList"></div>
 
     </div>
-
-
-    <button id="playButton">
-        JOGAR CARTA
-    </button>
-
 
     <div class="hand-area">
 
@@ -595,7 +497,7 @@ JOGO
 </section>
 
 
-<!-- ================= VENCEDOR ================= -->
+<!-- VENCEDOR -->
 
 <div id="winnerOverlay">
 
@@ -605,10 +507,7 @@ JOGO
 
         <h3 id="winnerName"></h3>
 
-        <div
-            id="winnerCard"
-            class="winner-card"
-        ></div>
+        <div id="winnerCard" class="winner-card"></div>
 
         <button id="nextRoundButton">
             PRÓXIMA RODADA ▶
@@ -621,13 +520,9 @@ JOGO
 
 <script type="module">
 
-
-/* ================= FIREBASE ================= */
-
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 
 import {
     getDatabase,
@@ -639,603 +534,562 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
+/* FIREBASE */
+
 const firebaseConfig = {
-
     apiKey: "AIzaSyCw5UmpciDeaBoV8_PsgDGUvohu0_kafMM",
-
-    authDomain:
-        "cartas-contra-humanidade-d91e3.firebaseapp.com",
-
-    databaseURL:
-        "https://cartas-contra-humanidade-d91e3-default-rtdb.firebaseio.com/",
-
-    projectId:
-        "cartas-contra-humanidade-d91e3",
-
-    storageBucket:
-        "cartas-contra-humanidade-d91e3.firebasestorage.app",
-
-    messagingSenderId:
-        "546342432146",
-
-    appId:
-        "1:546342432146:web:17e6bb977a3d7e1a57a54b"
-
+    authDomain: "cartas-contra-humanidade-d91e3.firebaseapp.com",
+    databaseURL: "https://cartas-contra-humanidade-d91e3-default-rtdb.firebaseio.com/",
+    projectId: "cartas-contra-humanidade-d91e3",
+    storageBucket: "cartas-contra-humanidade-d91e3.firebasestorage.app",
+    messagingSenderId: "546342432146",
+    appId: "1:546342432146:web:17e6bb977a3d7e1a57a54b"
 };
 
-
-const app =
-    initializeApp(firebaseConfig);
-
-const database =
-    getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 
-/* ================= CARTAS ================= */
+/* CARTAS */
 
 const blackCards = [
-
     "O jantar acabou quando alguém mencionou ______.",
-
     "Minha família nunca mais falou comigo depois de ______.",
-
     "A pior coisa encontrada no meu celular foi ______.",
-
     "O debate ficou estranho quando alguém falou sobre ______.",
-
     "A polícia ficou interessada depois de encontrar ______.",
-
     "A reunião terminou quando alguém revelou ______.",
-
     "Meu advogado pediu para eu nunca mais mencionar ______.",
-
     "A internet decidiu me cancelar depois de ______.",
-
     "A ceia de Natal foi destruída por ______.",
-
-    "Tudo começou com a frase: 'Não conta para ninguém sobre ______.'"
-
+    "Tudo começou com: 'Não conta para ninguém sobre ______.'"
 ];
-
 
 const whiteCards = [
-
     "Meu tio dando uma opinião que ninguém pediu.",
-
     "Um segredo de família extremamente inconveniente.",
-
     "A pior mensagem enviada para a pessoa errada.",
-
     "Uma opinião política destruindo o almoço.",
-
     "A frase 'eu posso explicar'.",
-
     "Um áudio que nunca deveria existir.",
-
     "Ser o motivo de uma reunião urgente.",
-
     "Aquele parente que ninguém convidou.",
-
     "Uma captura de tela extremamente comprometedora.",
-
     "Descobrir que todo mundo sabia.",
-
     "Uma desculpa pior que o problema.",
-
     "O silêncio depois de uma pergunta proibida.",
-
     "Meu histórico de pesquisa.",
-
     "Uma discussão completamente sem sentido.",
-
     "A pior decisão da minha vida.",
-
     "Uma conversa que deveria ter ficado no grupo privado.",
-
     "O momento em que a brincadeira deixou de ser brincadeira.",
-
     "Uma opinião tão ruim que acabou com a amizade.",
-
     "Ser banido de algum lugar.",
-
     "Descobrir tarde demais que alguém estava gravando."
-
 ];
 
 
-/* ================= VARIÁVEIS ================= */
+/* VARIÁVEIS */
 
-let playerId =
-    localStorage.getItem(
-        "cartasPlayerId"
-    );
-
+let playerId = localStorage.getItem("cartasPlayerId");
 
 if (!playerId) {
-
-    playerId =
-        "p_" +
-        Math.random()
-        .toString(36)
-        .slice(2);
-
-
-    localStorage.setItem(
-        "cartasPlayerId",
-        playerId
-    );
-
+    playerId = "p_" + Math.random().toString(36).slice(2);
+    localStorage.setItem("cartasPlayerId", playerId);
 }
 
-
 let currentRoom = null;
-
 let currentName = null;
-
 let selectedCard = null;
-
 let currentHand = [];
 
-let currentRound = null;
 
-let submitted = false;
+/* ELEMENTOS */
 
+const home = document.getElementById("home");
+const lobby = document.getElementById("lobby");
+const game = document.getElementById("game");
 
-/* ================= ELEMENTOS ================= */
+const playerNameInput = document.getElementById("playerName");
+const roomCodeInput = document.getElementById("roomCodeInput");
 
-const home =
-    document.getElementById("home");
+const createRoomButton = document.getElementById("createRoomButton");
+const joinRoomButton = document.getElementById("joinRoomButton");
+const startButton = document.getElementById("startButton");
 
-const lobby =
-    document.getElementById("lobby");
+const message = document.getElementById("message");
+const roomCodeDisplay = document.getElementById("roomCodeDisplay");
+const playersList = document.getElementById("playersList");
+const lobbyMessage = document.getElementById("lobbyMessage");
 
-const game =
-    document.getElementById("game");
+const roundInfo = document.getElementById("roundInfo");
+const judgeInfo = document.getElementById("judgeInfo");
+const opponents = document.getElementById("opponents");
+const blackCard = document.getElementById("blackCard");
+const gameStatus = document.getElementById("gameStatus");
+const hand = document.getElementById("hand");
+const submissionsArea = document.getElementById("submissionsArea");
+const scoreList = document.getElementById("scoreList");
 
-const playerNameInput =
-    document.getElementById("playerName");
-
-const roomCodeInput =
-    document.getElementById("roomCodeInput");
-
-const createRoomButton =
-    document.getElementById("createRoomButton");
-
-const joinRoomButton =
-    document.getElementById("joinRoomButton");
-
-const startButton =
-    document.getElementById("startButton");
-
-const message =
-    document.getElementById("message");
-
-const roomCodeDisplay =
-    document.getElementById("roomCodeDisplay");
-
-const playersList =
-    document.getElementById("playersList");
-
-const lobbyMessage =
-    document.getElementById("lobbyMessage");
-
-const roundInfo =
-    document.getElementById("roundInfo");
-
-const judgeInfo =
-    document.getElementById("judgeInfo");
-
-const opponents =
-    document.getElementById("opponents");
-
-const blackCard =
-    document.getElementById("blackCard");
-
-const gameStatus =
-    document.getElementById("gameStatus");
-
-const hand =
-    document.getElementById("hand");
-
-const playButton =
-    document.getElementById("playButton");
-
-const submissionsArea =
-    document.getElementById("submissionsArea");
-
-const scoreList =
-    document.getElementById("scoreList");
-
-const winnerOverlay =
-    document.getElementById("winnerOverlay");
-
-const winnerName =
-    document.getElementById("winnerName");
-
-const winnerCard =
-    document.getElementById("winnerCard");
-
-const nextRoundButton =
-    document.getElementById("nextRoundButton");
+const winnerOverlay = document.getElementById("winnerOverlay");
+const winnerName = document.getElementById("winnerName");
+const winnerCard = document.getElementById("winnerCard");
+const nextRoundButton = document.getElementById("nextRoundButton");
 
 
-/* ================= TELAS ================= */
+/* FUNÇÕES */
 
 function showScreen(screen) {
 
-    document
-    .querySelectorAll(".screen")
-    .forEach(
-        function (s) {
+    document.querySelectorAll(".screen").forEach(function(s) {
+        s.classList.remove("active");
+    });
 
-            s.classList
-            .remove("active");
-
-        }
-    );
-
-
-    screen.classList
-    .add("active");
-
+    screen.classList.add("active");
 }
 
-
-/* ================= CÓDIGO DA SALA ================= */
 
 function generateRoomCode() {
 
     const chars =
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    let code =
-        "";
+    let code = "";
 
+    for (let i = 0; i < 6; i++) {
 
-    for (
-        let i = 0;
-        i < 6;
-        i++
-    ) {
-
-        code +=
-            chars[
-                Math.floor(
-                    Math.random() *
-                    chars.length
-                )
-            ];
-
-    }
-
-
-    return code;
-
-}
-
-
-/* ================= EMBARALHAR ================= */
-
-function shuffle(array) {
-
-    const copy =
-        [...array];
-
-
-    for (
-        let i =
-            copy.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
-
-
-        [
-            copy[i],
-            copy[j]
-        ] =
-        [
-            copy[j],
-            copy[i]
+        code += chars[
+            Math.floor(Math.random() * chars.length)
         ];
 
     }
 
-
-    return copy;
-
+    return code;
 }
 
 
-/* ================= CRIAR SALA ================= */
+function shuffle(array) {
 
-createRoomButton
-.addEventListener(
-    "click",
-    async function () {
+    const copy = [...array];
 
-        try {
+    for (let i = copy.length - 1; i > 0; i--) {
 
-            const name =
-                playerNameInput
-                .value
-                .trim();
+        const j =
+            Math.floor(Math.random() * (i + 1));
 
-
-            if (!name) {
-
-                message.textContent =
-                    "Digite seu nome.";
-
-                return;
-
-            }
-
-
-            currentName =
-                name;
-
-
-            const code =
-                generateRoomCode();
-
-
-            await set(
-
-                ref(
-                    database,
-                    "rooms/" +
-                    code
-                ),
-
-                {
-
-                    host:
-                        playerId,
-
-                    status:
-                        "lobby",
-
-                    round:
-                        0,
-
-                    judge:
-                        null,
-
-                    blackCard:
-                        "",
-
-                    winner:
-                        null,
-
-                    players: {
-
-                        [playerId]: {
-
-                            name:
-                                name,
-
-                            score:
-                                0
-
-                        }
-
-                    },
-
-                    submissions:
-                        {}
-
-                }
-
-            );
-
-
-            currentRoom =
-                code;
-
-
-            enterLobby();
-
-        }
-
-        catch (error) {
-
-            message.textContent =
-                "Erro: " +
-                error.message;
-
-        }
+        [copy[i], copy[j]] =
+            [copy[j], copy[i]];
 
     }
-);
+
+    return copy;
+}
 
 
-/* ================= ENTRAR ================= */
+/* CRIAR SALA */
 
-joinRoomButton
-.addEventListener(
-    "click",
-    async function () {
+createRoomButton.addEventListener("click", async function() {
 
-        try {
+    try {
 
-            const name =
-                playerNameInput
-                .value
-                .trim();
+        const name =
+            playerNameInput.value.trim();
 
-
-            const code =
-                roomCodeInput
-                .value
-                .trim()
-                .toUpperCase();
-
-
-            if (!name) {
-
-                message.textContent =
-                    "Digite seu nome.";
-
-                return;
-
-            }
-
-
-            if (!code) {
-
-                message.textContent =
-                    "Digite o código.";
-
-                return;
-
-            }
-
-
-            const snapshot =
-                await get(
-
-                    ref(
-                        database,
-                        "rooms/" +
-                        code
-                    )
-
-                );
-
-
-            if (
-                !snapshot.exists()
-            ) {
-
-                message.textContent =
-                    "Sala não encontrada.";
-
-                return;
-
-            }
-
-
-            const room =
-                snapshot.val();
-
-
-            if (
-                room.status !==
-                "lobby"
-            ) {
-
-                message.textContent =
-                    "Essa partida já começou.";
-
-                return;
-
-            }
-
-
-            currentName =
-                name;
-
-            currentRoom =
-                code;
-
-
-            await set(
-
-                ref(
-                    database,
-                    "rooms/" +
-                    code +
-                    "/players/" +
-                    playerId
-                ),
-
-                {
-
-                    name:
-                        name,
-
-                    score:
-                        0
-
-                }
-
-            );
-
-
-            enterLobby();
-
-        }
-
-        catch (error) {
-
+        if (!name) {
             message.textContent =
-                "Erro: " +
-                error.message;
-
+                "Digite seu nome.";
+            return;
         }
+
+        currentName = name;
+
+        const code =
+            generateRoomCode();
+
+        await set(
+            ref(database, "rooms/" + code),
+            {
+                host: playerId,
+                status: "lobby",
+                round: 0,
+                judge: null,
+                blackCard: "",
+                submissions: {},
+                winner: null,
+
+                players: {
+                    [playerId]: {
+                        name: name,
+                        score: 0
+                    }
+                }
+            }
+        );
+
+        currentRoom = code;
+
+        enterLobby();
 
     }
-);
+
+    catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+            "Erro: " + error.message;
+
+    }
+
+});
 
 
-/* ================= ENTRAR LOBBY ================= */
+/* ENTRAR NA SALA */
+
+joinRoomButton.addEventListener("click", async function() {
+
+    try {
+
+        const name =
+            playerNameInput.value.trim();
+
+        const code =
+            roomCodeInput.value
+            .trim()
+            .toUpperCase();
+
+        if (!name) {
+            message.textContent =
+                "Digite seu nome.";
+            return;
+        }
+
+        if (!code) {
+            message.textContent =
+                "Digite o código.";
+            return;
+        }
+
+        const snapshot =
+            await get(
+                ref(database, "rooms/" + code)
+            );
+
+        if (!snapshot.exists()) {
+            message.textContent =
+                "Sala não encontrada.";
+            return;
+        }
+
+        const room =
+            snapshot.val();
+
+        if (room.status !== "lobby") {
+            message.textContent =
+                "A partida já começou.";
+            return;
+        }
+
+        currentRoom = code;
+        currentName = name;
+
+        await set(
+            ref(
+                database,
+                "rooms/" +
+                code +
+                "/players/" +
+                playerId
+            ),
+            {
+                name: name,
+                score: 0
+            }
+        );
+
+        enterLobby();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+            "Erro: " + error.message;
+
+    }
+
+});
+
+
+/* LOBBY */
 
 function enterLobby() {
 
-    showScreen(
-        lobby
-    );
-
+    showScreen(lobby);
 
     roomCodeDisplay.textContent =
         currentRoom;
 
-
-    const roomRef =
+    onValue(
         ref(
             database,
-            "rooms/" +
-            currentRoom
-        );
+            "rooms/" + currentRoom
+        ),
+        function(snapshot) {
 
-
-    onValue(
-        roomRef,
-        function (snapshot) {
-
-            if (
-                !snapshot.exists()
-            ) return;
-
+            if (!snapshot.exists()) return;
 
             const room =
                 snapshot.val();
 
+            if (room.status === "lobby") {
 
-            if (
-                room.status ===
-                "lobby"
-            ) {
-
-                updateLobby(
-                    room
-                );
+                updateLobby(room);
 
             }
 
+            if (room.status === "playing") {
 
-            else if (
-                room.status ===
-                "playing"
-            ) {
+                updateGame(room);
 
-                updateGame(
-                    room
- 
+            }
+
+        }
+    );
+
+}
+
+
+function updateLobby(room) {
+
+    showScreen(lobby);
+
+    playersList.innerHTML = "";
+
+    const players =
+        Object.entries(room.players || {});
+
+    players.forEach(function([id, player]) {
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            "player-row";
+
+        const name =
+            document.createElement("span");
+
+        name.textContent =
+            player.name;
+
+        row.appendChild(name);
+
+        if (id === room.host) {
+
+            const host =
+                document.createElement("span");
+
+            host.className =
+                "host";
+
+            host.textContent =
+                "HOST";
+
+            row.appendChild(host);
+
+        }
+
+        playersList.appendChild(row);
+
+    });
+
+
+    if (room.host === playerId) {
+
+        startButton.style.display =
+            "block";
+
+        lobbyMessage.textContent =
+            "";
+
+    }
+
+    else {
+
+        startButton.style.display =
+            "none";
+
+        lobbyMessage.textContent =
+            "Esperando o host iniciar...";
+
+    }
+
+}
+
+
+/* INICIAR */
+
+startButton.addEventListener("click", async function() {
+
+    try {
+
+        const snapshot =
+            await get(
+                ref(
+                    database,
+                    "rooms/" +
+                    currentRoom
+                )
+            );
+
+        const room =
+            snapshot.val();
+
+        if (room.host !== playerId) {
+            return;
+        }
+
+        const players =
+            Object.keys(room.players);
+
+        if (players.length < 2) {
+
+            lobbyMessage.textContent =
+                "Precisa de pelo menos 2 jogadores.";
+
+            return;
+        }
+
+        const judge =
+            players[0];
+
+        const card =
+            blackCards[
+                Math.floor(
+                    Math.random() *
+                    blackCards.length
+                )
+            ];
+
+        await update(
+            ref(
+                database,
+                "rooms/" +
+                currentRoom
+            ),
+            {
+                status: "playing",
+                round: 1,
+                judge: judge,
+                blackCard: card,
+                submissions: {},
+                winner: null
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        lobbyMessage.textContent =
+            "Erro ao iniciar.";
+
+    }
+
+});
+
+
+/* JOGO */
+
+function updateGame(room) {
+
+    showScreen(game);
+
+    roundInfo.textContent =
+        "RODADA " +
+        room.round;
+
+    blackCard.textContent =
+        room.blackCard;
+
+
+    const players =
+        room.players || {};
+
+    const judge =
+        players[room.judge];
+
+
+    if (judge) {
+
+        judgeInfo.textContent =
+            "👑 Juiz: " +
+            judge.name;
+
+    }
+
+
+    opponents.innerHTML = "";
+
+    Object.entries(players).forEach(
+        function([id, player]) {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "opponent";
+
+            if (id === room.judge) {
+                div.classList.add("judge");
+            }
+
+            div.textContent =
+                player.name +
+                " • " +
+                (player.score || 0);
+
+            opponents.appendChild(div);
+
+        }
+    );
+
+
+    scoreList.innerHTML = "";
+
+    Object.values(players).forEach(
+        function(player) {
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "score-row";
+
+            const name =
+                document.createElement("span");
+
+            name.textContent =
+                player.name;
+
+            const score =
+                document.createElement("strong");
+
+            score.textContent =
+                player.score || 0;
+
+            row.appendChild(name);
+            row.appendChild(score);
+
+            scoreList.appendChild(row);
+
+        }
+    );
+
+
+    if (!currentHand.length) 
