@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cartas Contra Talys</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ece8df;
+    color: #111;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+header p {
+    margin: 8px 0 0;
+    opacity: 0.75;
+}
+
+main {
+    max-width: 1000px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* TELA INICIAL */
+
+#menu {
+    text-align: center;
+    padding: 70px 20px;
+}
+
+#menu h2 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+#menu p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+#playButton {
+    background: #111;
+    color: white;
+    font-size: 1.3rem;
+}
+
+/* JOGO */
+
+#game {
+    display: none;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* CARTA PRETA */
+
+.black-card {
+    background: #111;
+    color: white;
+    border-radius: 16px;
+    padding: 35px;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    margin-bottom: 35px;
+}
+
+/* CARTAS BRANCAS */
+
+.cards-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.white-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.white-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    min-height: 170px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: 0.2s;
+}
+
+.white-card:hover {
+    transform: translateY(-8px);
+}
+
+.white-card.selected {
+    background: #ddd;
+    outline: 4px solid #111;
+}
+
+/* RESULTADO */
+
+#result {
+    display: none;
+    margin-top: 30px;
+    text-align: center;
+}
+
+#result h2 {
+    font-size: 1.5rem;
+}
+
+#nextButton {
+    margin-top: 15px;
+    background: #111;
+    color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    #menu h2 {
+        font-size: 2.2rem;
+    }
+
+    .black-card {
+        font-size: 1.3rem;
+        min-height: 200px;
+    }
+
+    .white-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🃏 CARTAS CONTRA TALYS</h1>
+    <p>Um jogo onde sua dignidade é opcional.</p>
+</header>
+
+<main>
+
+<section id="menu">
+    <h2>Cartas Contra Talys</h2>
+    <p>Escolha a resposta mais absurda possível.</p>
+
+    <button id="playButton">▶ JOGAR</button>
+</section>
+
+<section id="game">
+
+    <div class="info">
+        <div>Pontos: <span id="score">0</span></div>
+        <div>Rodada: <span id="round">1</span></div>
+    </div>
+
+    <div class="black-card" id="blackCard">
+        Carta preta
+    </div>
+
+    <div class="cards-title">
+        Escolha sua resposta:
+    </div>
+
+    <div class="white-cards" id="whiteCards"></div>
+
+    <div id="result">
+        <h2 id="resultText"></h2>
+
+        <button id="nextButton">
+            PRÓXIMA RODADA →
+        </button>
+    </div>
+
+</section>
+
+</main>
+
+<script>
+
+/* =========================
+   CARTAS PRETAS
+========================= */
+
+const blackCards = [
+
+"O jantar de família terminou quando alguém decidiu falar sobre ______.",
+
+"A escola realizou uma reunião de emergência depois de descobrir ______.",
+
+"Meu advogado olhou para mim e perguntou: 'Por que você achou que ______ era uma boa ideia?'",
+
+"Ninguém estava preparado para a opinião do meu tio sobre ______.",
+
+"A discussão sobre aborto ficou ainda pior depois que alguém trouxe ______ para o debate.",
+
+"O problema começou quando alguém tentou justificar ______ dizendo 'é só minha opinião'.",
+
+"Minha reputação acabou oficialmente depois de ______.",
+
+"O grupo inteiro ficou em silêncio quando perceberam ______.",
+
+"A pior coisa que alguém pode dizer antes de uma reunião familiar é: 'Precisamos conversar sobre ______.'",
+
+"A polícia ficou particularmente interessada quando encontrou ______.",
+
+"O pedido de desculpas teria funcionado melhor se não mencionasse ______.",
+
+"A internet decidiu que eu precisava ser cancelado por causa de ______.",
+
+"O debate político acabou quando alguém gritou ______.",
+
+"Minha mãe perguntou por que havia ______ no meu quarto, e eu percebi que minha vida tinha acabado.",
+
+"A frase 'não é racismo, mas...' foi imediatamente seguida por ______.",
+
+"A reunião terminou cedo depois que alguém revelou ______.",
+
+"Meu maior erro foi acreditar que ninguém descobriria ______.",
+
+"No tribunal, a única coisa que eu conseguia pensar era: 'Tudo isso por causa de ______?'",
+
+"A ceia de Natal nunca mais foi a mesma depois de ______.",
+
+"E foi naquele momento que percebi que deveria ter ficado calado sobre ______."
+
+];
+
+
+/* =========================
+   CARTAS BRANCAS
+========================= */
+
+const whiteCards = [
+
+"Racismo disfarçado de 'liberdade de expressão'.",
+
+"Um debate sobre aborto conduzido por pessoas completamente desinformadas.",
+
+"A hipocrisia aparecendo pontualmente no almoço de família.",
+
+"Meu tio explicando por que 'na época dele era melhor'.",
+
+"Um comentário preconceituoso seguido de 'foi só brincadeira'.",
+
+"Educação sexual feita por quem claramente precisava de educação sexual.",
+
+"A falência moral de uma reunião de família.",
+
+"Descobrir que o problema realmente era eu.",
+
+"Uma opinião política que matou completamente o clima.",
+
+"Tentar justificar o injustificável por quarenta minutos.",
+
+"Ser o motivo de uma reunião urgente.",
+
+"A polícia fazendo perguntas específicas demais.",
+
+"Meu advogado recomendando que eu simplesmente fique calado.",
+
+"Uma mensagem apagada rápido demais para não ser suspeita.",
+
+"'Não conta isso para ninguém.'",
+
+"O grupo inteiro fazendo um pacto de silêncio.",
+
+"Descobrir por que aquela porta estava trancada.",
+
+"Um segredo de família que deveria ter morrido com alguém.",
+
+"Aquele parente que ninguém convida, mas sempre aparece.",
+
+"Ser cancelado por algo que eu realmente fiz.",
+
+"Uma desculpa tão ruim que virou uma confissão.",
+
+"A pior pessoa possível tendo acesso a um microfone.",
+
+"Um discurso motivacional completamente inadequado para a situação.",
+
+"Um trauma coletivo causado por uma única frase.",
+
+"O silêncio depois de alguém perguntar 'isso é sério?'.",
+
+"Uma discussão tão absurda que ninguém lembra como começou.",
+
+"Descobrir que meu histórico de pesquisa não era privado.",
+
+"Aquele áudio que deveria ter sido destruído imediatamente.",
+
+"Uma captura de tela enviada para a pessoa errada.",
+
+"Ser banido de um lugar onde eu nunca deveria ter entrado.",
+
+"Uma crise de reputação em tempo integral.",
+
+"O momento em que a brincadeira deixou de ser brincadeira.",
+
+"Uma reunião familiar terminando em lados opostos.",
+
+"Alguém dizendo 'eu posso explicar' sem ter absolutamente nenhuma explicação.",
+
+"A pessoa mais ignorante da sala falando com confiança.",
+
+"Um debate moral conduzido por quem não possui moral alguma.",
+
+"A frase 'eu tenho amigos que são assim'.",
+
+"Preconceito suficiente para acabar com a sobremesa.",
+
+"Descobrir que alguém gravou tudo.",
+
+"Uma tentativa de parecer inteligente que terminou em desastre público.",
+
+"A falência completa da minha imagem.",
+
+"Uma opinião tão ruim que uniu pessoas que se odiavam.",
+
+"A pior decisão da minha vida documentada em vídeo.",
+
+"O constrangimento de perceber que todo mundo sabia.",
+
+"Uma confissão feita no momento mais inconveniente possível.",
+
+"Um pedido de desculpas escrito por uma equipe jurídica.",
+
+"O motivo pelo qual não sou mais bem-vindo naquela casa.",
+
+"Uma conversa séria que terminou em caos absoluto.",
+
+"A humanidade decepcionando a humanidade.",
+
+"Tudo aquilo que meu terapeuta provavelmente ouviria e respiraria fundo."
+
+];
+
+
+/* =========================
+   VARIÁVEIS
+========================= */
+
+let score = 0;
+let round = 1;
+let currentBlackCard = "";
+let hand = [];
+
+
+/* =========================
+   ELEMENTOS
+========================= */
+
+const menu = document.getElementById("menu");
+const game = document.getElementById("game");
+const playButton = document.getElementById("playButton");
+const blackCardElement = document.getElementById("blackCard");
+const whiteCardsElement = document.getElementById("whiteCards");
+const scoreElement = document.getElementById("score");
+const roundElement = document.getElementById("round");
+const result = document.getElementById("result");
+const resultText = document.getElementById("resultText");
+const nextButton = document.getElementById("nextButton");
+
+
+/* =========================
+   FUNÇÃO ALEATÓRIA
+========================= */
+
+function randomItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+
+/* =========================
+   INICIAR JOGO
+========================= */
+
+playButton.addEventListener("click", () => {
+
+    menu.style.display = "none";
+    game.style.display = "block";
+
+    startRound();
+
+});
+
+
+/* =========================
+   INICIAR RODADA
+========================= */
+
+function startRound() {
+
+    result.style.display = "none";
+
+    currentBlackCard = randomItem(blackCards);
+
+    blackCardElement.textContent = currentBlackCard;
+
+    hand = [];
+
+    /* Evita repetir cartas na mesma mão */
+
+    const shuffledCards = [...whiteCards]
+        .sort(() => Math.random() - 0.5);
+
+    hand = shuffledCards.slice(0, 7);
+
+    whiteCardsElement.innerHTML = "";
+
+    hand.forEach(card => {
+
+        const cardElement =
+            document.createElement("div");
+
+        cardElement.className = "white-card";
+
+        cardElement.textContent = card;
+
+        cardElement.addEventListener(
+            "click",
+            () => selectCard(card, cardElement)
+        );
+
+        whiteCardsElement.appendChild(cardElement);
+
+    });
+
+}
+
+
+/* =========================
+   ESCOLHER CARTA
+========================= */
+
+function selectCard(card, selectedElement) {
+
+    document
+        .querySelectorAll(".white-card")
+        .forEach(element => {
+
+            element.classList.remove("selected");
+            element.style.pointerEvents = "none";
+
+        });
+
+
+    selectedElement.classList.add("selected");
+
+
+    const completed =
+        currentBlackCard.replace(
+            "______",
+            card
+        );
+
+
+    resultText.textContent = completed;
+
+    result.style.display = "block";
+
+
+    score++;
+
+    scoreElement.textContent = score;
+
+}
+
+
+/* =========================
+   PRÓXIMA RODADA
+========================= */
+
+nextButton.addEventListener("click", () => {
+
+    round++;
+
+    roundElement.textContent = round;
+
+    startRound();
+
+});
+
+</script>
+
+</body>
+  </html>
